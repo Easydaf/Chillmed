@@ -6,6 +6,7 @@ const quotes = [
   "Hari yang berat bukan berarti hidup yang buruk.",
   "sebenarnya kau hebat",
   "semua patut disyukuri",
+  "Bersyukur aja nanti juga dapat yang lebih baik kok."
 ];
 
 let currentQuoteIndex = 0;
@@ -25,4 +26,4 @@ function changeQuote() {
 }
 
 // Ganti quote setiap 8 detik
-setInterval(changeQuote, 2000);
+setInterval(changeQuote, 5000);

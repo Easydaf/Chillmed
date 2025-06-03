@@ -25,7 +25,7 @@
         <h2>Fitur Unggulan</h2>
         <div class="feature-cards">
             <div class="feature-card">
-                <a href="chatbot.html" name="chatbot">
+                <a href="<?= base_url('chatbot') ?>" name="chatbot">
                     <h3>Chatbot</h3>
                     <p>
                         Deteksi dini gejala mental health dengan percakapan interaktif.

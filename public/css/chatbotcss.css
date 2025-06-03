@@ -1,0 +1,117 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #b7e1dc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.chat-container {
+  background-color: #fff;
+  border-radius: 20px;
+  width: 90%;
+  height: 90%;
+  max-height: 1000px;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.chat-header {
+  padding: 16px;
+  font-size: 1.2rem;
+  border-bottom: 1px solid #ddd;
+  flex-shrink: 0;
+  
+  /* Tambahan untuk menata elemen di header */
+  display: flex; /* Aktifkan flexbox */
+  align-items: center; /* Pusatkan item secara vertikal */
+  justify-content: center; /* Pusatkan konten secara horizontal secara default */
+  position: relative; /* Penting untuk posisi absolut dari judul */
+}
+
+.back-button {
+  /* Posisi tombol kembali di pojok kiri */
+  position: absolute; /* Posisikan secara absolut */
+  left: 16px; /* Jarak dari kiri */
+  top: 50%; /* Mulai dari tengah vertikal */
+  transform: translateY(-50%); /* Geser ke atas 50% dari tingginya sendiri untuk pusatkan */
+  
+  background: none;
+  border: none;
+  font-size: 1.5rem; /* Ukuran ikon */
+  color: #00695c; /* Warna ikon */
+  cursor: pointer;
+  text-decoration: none; /* Hapus garis bawah default link */
+  padding: 5px; /* Tambahkan padding agar mudah diklik */
+  z-index: 10; /* Pastikan tombol di atas elemen lain */
+}
+
+.back-button:hover {
+  color: #004d40; /* Warna hover */
+}
+
+.header-title {
+  /* Judul ChillMed di Tengah */
+  margin: 0; /* Hapus margin default h2 */
+  text-align: center; /* Pusatkan teks di dalam elemen */
+  flex-grow: 1; /* Biarkan judul mengambil ruang sisa untuk membantu pemusatan */
+  color: #00695c; /* Warna teks yang lebih menonjol */
+}
+
+.chat-box {
+  padding: 16px;
+  flex-grow: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bot-message {
+  align-self: flex-start;
+  background-color: #a0d9c7;
+  color: #000;
+  padding: 10px 14px;
+  border-radius: 20px;
+  max-width: 80%;
+}
+
+.user-message {
+  align-self: flex-end;
+  background-color: #e5e5e5;
+  color: #000;
+  padding: 10px 14px;
+  border-radius: 20px;
+  max-width: 80%;
+}
+
+.chat-input {
+  display: flex;
+  flex-shrink: 0;
+  padding: 12px;
+  border-top: 1px solid #ddd;
+  background-color: #f3f3f3;
+  border-radius: 0 0 20px 20px;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+}
+
+.chat-input button {
+  background-color: #00695c;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  margin-left: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
