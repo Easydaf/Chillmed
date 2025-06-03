@@ -1,0 +1,73 @@
+body {
+  font-family: "Segoe UI", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #bde0db;
+}
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #bde0db; /* pastel teal seperti UI */
+}
+
+.form-box {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 20px;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-box h2 {
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.form-box label {
+  display: block;
+  text-align: left;
+  margin-bottom: 0.3rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.form-box input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  border: none;
+  background-color: #f1f1f1;
+}
+
+.form-box .btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #007f73;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.form-box .btn:hover {
+  background-color: #006c63;
+}
+
+.small-text {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.small-text a {
+  color: #007f73;
+  font-weight: bold;
+  text-decoration: none;
+}
