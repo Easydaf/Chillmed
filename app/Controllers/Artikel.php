@@ -1,10 +1,12 @@
-<?php namespace App\Controllers;
+<?php
 
-use App\Controllers\BaseController; 
-use CodeIgniter\Helpers\url_helper; 
+namespace App\Controllers;
+
+use App\Controllers\BaseController;
+use CodeIgniter\Helpers\url_helper;
 
 class Artikel extends BaseController
-{ 
+{
     private $allArticles = [
         [
             'title' => 'Apa Itu Gangguan Cemas? Penjelasan Lengkap dan Solusinya',
@@ -45,10 +47,10 @@ class Artikel extends BaseController
             'content' => 'Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.'
         ],
     ];
-  
+
     public function home()
-    {   
-       $data = [
+    {
+        $data = [
             'articles' => $this->allArticles,
             'pageTitle' => 'Daftar Artikel ChillMed'
         ];
@@ -57,28 +59,28 @@ class Artikel extends BaseController
 
     public function detail($title_slug = null)
     {
-        
+
         if ($title_slug === null) {
             return redirect()->to(base_url('artikel'));
         }
 
         $selectedArticle = null;
         foreach ($this->allArticles as $article) {
-            
+
             if (url_title($article['title'], '-', TRUE) === $title_slug) {
                 $selectedArticle = $article;
                 break;
             }
-        }     
+        }
         if ($selectedArticle === null) {
-           
+
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
         $data = [
             'article' => $selectedArticle,
             'relatedArticles' => $this->allArticles,
-            'pageTitle' => $selectedArticle['title'] 
-        ];  
+            'pageTitle' => $selectedArticle['title']
+        ];
         return view('layout/artikel/artikeldetail', $data);
     }
 }

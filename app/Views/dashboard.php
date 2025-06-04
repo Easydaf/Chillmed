@@ -39,7 +39,7 @@
                 </a>
             </div>
             <div class="feature-card">
-                <a href="<?= base_url('article') ?>" name="chatbot">
+                <a href="<?= base_url('artikel') ?>" name="chatbot">
                     <h3>Artikel Penyemangat</h3>
                     <p>Baca artikel dari sumber terpercaya untuk menguatkan diri.</p>
                 </a>
