@@ -233,7 +233,8 @@ class ChatbotController extends Controller
             Prioritas utama Anda adalah keamanan dan akurasi.
             Jangan pernah memberikan diagnosis medis, saran medis, resep, atau nomor darurat krisis.
             Jika pertanyaan di luar cakupan kesehatan mental atau tidak pantas, tolak dengan sopan dan sarankan untuk mencari bantuan profesional atau sumber daya yang relevan.
-            Jawab pertanyaan pengguna dengan singkat dan jelas.";
+            Jawab pertanyaan pengguna dengan singkat dan jelas.
+            jika terdapat kata yang di bold jangan menggunakan simbol **, gunakan huruf kapital.";
 
         $chatHistory = [
             [

@@ -1,0 +1,105 @@
+/* Styling untuk body */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #b7e1dc; /* Warna latar belakang pastel teal */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Pastikan mengisi tinggi viewport */
+            margin: 0;
+            padding: 20px; /* Padding agar tidak terlalu mepet di layar kecil */
+            box-sizing: border-box; /* Pastikan padding tidak menambah lebar/tinggi */
+        }
+
+        /* Styling untuk container utama */
+        .container {
+            width: 100%;
+            max-width: 450px; /* Lebar maksimum untuk kartu hasil */
+            padding: 0 15px; /* Padding horizontal */
+        }
+
+        /* Styling untuk kartu hasil */
+        .result-card {
+            background-color: #ffffff;
+            border-radius: 20px; /* Sudut membulat */
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); /* Bayangan */
+            padding: 40px; /* Padding internal */
+            text-align: center;
+            animation: fadeIn 0.8s ease-out; /* Animasi fade-in */
+        }
+
+        /* Keyframes untuk animasi fade-in */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Styling untuk judul hasil */
+        .result-card h1 {
+            font-size: 2.25rem; /* Ukuran font besar */
+            font-weight: 700; /* Bold */
+            color: #00695c; /* Warna teks hijau gelap */
+            margin-bottom: 1rem; /* Jarak bawah */
+        }
+
+        /* Styling untuk teks skor */
+        .score-label {
+            font-size: 1.125rem; /* Ukuran font sedang */
+            color: #4a5568; /* Warna teks abu-abu */
+            margin-bottom: 0.5rem; /* Jarak bawah */
+        }
+
+        .score-value {
+            font-size: 3.5rem; /* Ukuran font sangat besar */
+            font-weight: 800; /* Extra bold */
+            color: #00a99d; /* Warna teks hijau terang */
+            margin-top: 0.5rem; /* Jarak atas */
+            margin-bottom: 1.5rem; /* Jarak bawah */
+        }
+
+        /* Styling untuk teks hasil deskriptif */
+        .result-text {
+            font-size: 1.25rem; /* Ukuran font besar */
+            color: #2d3748; /* Warna teks abu-abu gelap */
+            line-height: 1.6; /* Tinggi baris */
+            margin-bottom: 2rem; /* Jarak bawah */
+        }
+
+        /* Styling untuk tombol kembali */
+        .back-button {
+            display: inline-block; /* Agar bisa diatur padding dll. */
+            background-color: #00796b; /* Warna latar belakang tombol */
+            color: white;
+            font-weight: 600; /* Semi-bold */
+            padding: 12px 24px; /* Padding tombol */
+            border-radius: 8px; /* Sudut membulat */
+            text-decoration: none; /* Hapus garis bawah */
+            transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out; /* Transisi halus */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bayangan tombol */
+        }
+
+        .back-button:hover {
+            background-color: #005f4f; /* Warna hover */
+            transform: translateY(-2px); /* Efek sedikit naik saat hover */
+        }
+
+        /* Media Queries untuk responsivitas */
+        @media (max-width: 600px) {
+            .result-card {
+                padding: 25px; /* Kurangi padding di layar kecil */
+                border-radius: 15px;
+            }
+            .result-card h1 {
+                font-size: 1.8rem;
+            }
+            .score-value {
+                font-size: 3rem;
+            }
+            .result-text {
+                font-size: 1rem;
+            }
+            .back-button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
