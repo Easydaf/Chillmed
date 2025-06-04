@@ -14,8 +14,7 @@
             <a href="<?= base_url('dashboard') ?>">Beranda</a>
             <a href="<?= base_url('chatbot') ?>">Chatbot</a>
             <a href="<?= base_url('questions') ?>">Pertanyaan</a>
-            <button class="btn login">Login</button>
-            <button class="btn signup">Sign Up</button>
+            <a href="<?= base_url('/') ?>"><button class="btn logout">Logout</button></a>
         </nav>
     </header>
 

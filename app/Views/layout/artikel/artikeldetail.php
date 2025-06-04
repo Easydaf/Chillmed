@@ -11,12 +11,10 @@
     <header class="navbar">
         <div class="logo"><span class="chill">Chill</span><span class="med">Med</span></div>
         <nav>
-            <a href="<?= base_url('/') ?>">Beranda</a>
-            <a href="#">Chatbot</a>
-            <a href="#">Pertanyaan</a>
-            <button class="btn login">Login</button>
-            <button class="btn signup">Sign Up</button>
-        </nav>
+            <a href="<?= base_url('dashboard') ?>">Beranda</a>
+            <a href="<?= base_url('chatbot') ?>">Chatbot</a>
+            <a href="<?= base_url('questions') ?>">Pertanyaan</a>
+            <a href="<?= base_url('/') ?>"><button class="btn logout">Logout</button></a>
     </header>
 
     <main class="container">

@@ -8,11 +8,14 @@
 </head>
 
 <body>
-    <header>
-        <!-- Judul ChillMed sekarang menjadi tautan ke dashboard -->
-        <a href="<?= base_url('dashboard') ?>" class="header-link">
-            <div class="logo"><span>Chill</span>Med</div>
-        </a>
+    <header class="navbar">
+        <div class="logo"><span class="chill">Chill</span><span class="med">Med</span></div>
+        <nav>
+            <a href="<?= base_url('dashboard') ?>">Beranda</a>
+            <a href="<?= base_url('chatbot') ?>">Chatbot</a>
+            <a href="<?= base_url('questions') ?>">Pertanyaan</a>
+            <a href="<?= base_url('/') ?>"><button class="btn logout">Logout</button></a>
+        </nav>
     </header>
 
     <main>
