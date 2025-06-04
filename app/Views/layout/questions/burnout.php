@@ -4,28 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insomnia Self-Check - ChillMed</title>
+    <title>Burnout Self-Check - ChillMed</title>
     <link rel="stylesheet" href="<?= base_url('css/questionstyle.css') ?>">
 </head>
 
 <body>
     <div class="container">
-        <h1>Insomnia Self-Check</h1>
-        <!-- Pastikan action form mengarah ke Questions::submit untuk kategori 'insomnia' -->
-        <form method="post" action="<?= base_url('questions/insomnia') ?>">
+        <h1>Burnout Self-Check</h1>
+        <!-- Pastikan action form mengarah ke Questions::submit untuk kategori 'burnout' -->
+        <form method="post" action="<?= base_url('questions/burnout') ?>">
             <p>Dalam 2 minggu terakhir, seberapa sering kamu mengalami hal berikut?</p>
 
             <?php
             $questions = [
-                "Saya kesulitan untuk tertidur di malam hari.",
-                "Saya sering terbangun di tengah malam dan sulit tidur kembali.",
-                "Saya terbangun terlalu pagi dan tidak bisa tidur lagi.",
-                "Saya merasa tidak segar atau lelah setelah bangun tidur.",
-                "Saya merasa mengantuk di siang hari, meskipun sudah mencoba tidur cukup.",
-                "Masalah tidur saya memengaruhi konsentrasi atau fokus saya di kampus/pekerjaan.",
-                "Saya merasa mudah tersinggung atau *moody* karena kurang tidur.",
-                "Saya merasa khawatir atau cemas tentang waktu tidur saya.",
-                "Masalah tidur saya berdampak negatif pada kualitas hidup saya secara keseluruhan."
+                "Saya merasa lelah secara fisik dan emosional hampir setiap hari.",
+                "Saya merasa sinis atau tidak peduli terhadap kuliah atau tugas-tugas saya.",
+                "Motivasi saya untuk belajar atau menyelesaikan pekerjaan sangat menurun.",
+                "Saya kesulitan berkonsentrasi atau mengingat hal-hal yang berkaitan dengan studi.",
+                "Saya merasa tidak efektif atau tidak mampu dalam pekerjaan akademik saya.",
+                "Saya sering menunda-nunda tugas atau merasa kewalahan dengan beban kerja.",
+                "Saya merasa terisolasi atau menarik diri dari teman dan kegiatan sosial.",
+                "Saya mengalami masalah tidur (sulit tidur, sering terbangun, atau tidur terlalu banyak) karena stres.",
+                "Saya sering merasa frustrasi atau mudah marah terkait dengan tuntutan akademik."
             ];
 
             // Pilihan skala 1-5

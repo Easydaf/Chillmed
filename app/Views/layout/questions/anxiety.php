@@ -35,7 +35,7 @@
                 for ($j = 1; $j <= 5; $j++) {
                     echo "<label>
                             <input type='radio' name='q" . $i . "' value='$j' required> $j
-                          </label> ";
+                        </label> ";
                 }
                 echo "</div><hr>";
             }

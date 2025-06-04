@@ -16,7 +16,7 @@ class Questions extends BaseController
     public function show($kategori)
     {
         // Pastikan kategori yang diminta ada dalam daftar yang diizinkan
-        $allowed = ['anxiety', 'depression', 'ducksyndrome', 'eatingdisorder', 'insomnia', 'burnout']; // Tambahkan 'burnout'
+        $allowed = ['anxiety', 'depression', 'ducksyndrome', 'eatingdisorders', 'insomnia', 'burnout']; // Tambahkan 'burnout'
         if (!in_array($kategori, $allowed)) {
             return redirect()->to('/questions')->with('error', 'Kategori pertanyaan tidak valid.');
         }
@@ -28,7 +28,7 @@ class Questions extends BaseController
     // Proses hasil jawaban dari form questions
     public function submit($kategori)
     {
-        $allowed = ['anxiety', 'depression', 'ducksyndrome', 'eatingdisorder', 'insomnia', 'burnout']; // Tambahkan 'burnout'
+        $allowed = ['anxiety', 'depression', 'ducksyndrome', 'eatingdisorders', 'insomnia', 'burnout']; // Tambahkan 'burnout'
         if (!in_array($kategori, $allowed)) {
             return redirect()->to('/questions')->with('error', 'Kategori pertanyaan tidak valid.');
         }
@@ -63,13 +63,16 @@ class Questions extends BaseController
         $message = "Skor Anda untuk $kategori adalah $score. ";
 
         // Contoh sederhana, Anda perlu menyesuaikan skala dan pesan untuk setiap kategori
-        if ($score <= 12) {
-            $message .= "Tingkat gejala rendah. Tetap jaga kesehatan mentalmu! 😊";
-        } elseif ($score <= 24) {
-            $message .= "Tingkat gejala sedang. Coba teknik relaksasi atau mindfulness ya.";
+       if ($score >= 9 && $score <= 18) { // Setara dengan 0-2 di skala asli
+            return "Skor Anda menunjukkan indikasi depresi minimal. Tetap jaga kesehatan mentalmu! 😊";
+        } elseif ($score >= 19 && $score <= 27) { // Setara dengan 3-4 di skala asli
+            return "Skor Anda menunjukkan indikasi depresi ringan. Coba teknik relaksasi, mindfulness, atau berbicara dengan teman dekat.";
+        } elseif ($score >= 28 && $score <= 36) { // Setara dengan 5-6 di skala asli
+            return "Skor Anda menunjukkan indikasi depresi sedang. Disarankan untuk mencari dukungan dari konselor kampus atau psikolog.";
+        } elseif ($score >= 37 && $score <= 45) { // Setara dengan 7-9 di skala asli
+            return "Skor Anda menunjukkan indikasi depresi berat. Sangat disarankan untuk segera berkonsultasi dengan profesional kesehatan mental (psikolog/psikiater) untuk evaluasi lebih lanjut dan penanganan yang tepat.";
         } else {
-            $message .= "Tingkat gejala tinggi. Disarankan untuk berkonsultasi dengan profesional kesehatan mental.";
+            return "Skor tidak valid. Mohon pastikan semua pertanyaan dijawab.";
         }
-        return $message;
     }
 }
