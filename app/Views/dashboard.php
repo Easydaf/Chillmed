@@ -33,7 +33,7 @@
                 </a>
             </div>
             <div class="feature-card">
-                <a href="question.php" name="chatbot">
+                <a href="<?= base_url('questions') ?>" name="questions">
                     <h3>Pertanyaan Lanjutan</h3>
                     <p>Jawab pertanyaan mendalam berdasarkan hasil chatbot.</p>
                 </a>
