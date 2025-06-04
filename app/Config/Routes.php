@@ -20,9 +20,11 @@ $routes->get('/questions', 'Questions::index');
 $routes->get('/questions/(:segment)', 'Questions::show/$1'); // Menampilkan form kuesioner (e.g., /questions/anxiety)
 $routes->post('/questions/(:segment)', 'Questions::submit/$1'); // Memproses submit form kuesioner (e.g., /questions/anxiety POST)
 
+// HAPUS RUTE INI JIKA ANDA MENGKONSOLIDASI KE QUESTIONS CONTROLLER
+// $routes->get('anxiety', 'Pages::anxiety');
+// $routes->post('hasil/anxiety', 'Hasil::anxiety');
 
 $routes->get('dashboard', 'DashboardController::index', ['filter' => 'auth']);
 
-$routes->get('/artikel', 'Artikel::home');
-$routes->get('/artikel/detail/(:segment)', 'Artikel::detail/$1');
-
+// Anda bisa menambahkan rute untuk halaman statis lain di Pages Controller jika diperlukan
+// $routes->get('/about', 'Pages::about');
