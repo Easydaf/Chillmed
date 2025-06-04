@@ -45,21 +45,16 @@ class Artikel extends BaseController
             'content' => 'Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.'
         ],
     ];
-
-    
+  
     public function home()
-    {
-        
-        $data = [
+    {   
+       $data = [
             'articles' => $this->allArticles,
             'pageTitle' => 'Daftar Artikel ChillMed'
         ];
-
-    
         return view('layout/artikel/artikelhome', $data);
     }
 
-    
     public function detail($title_slug = null)
     {
         
@@ -74,14 +69,11 @@ class Artikel extends BaseController
                 $selectedArticle = $article;
                 break;
             }
-        }
-
-        
+        }     
         if ($selectedArticle === null) {
            
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
-
         $data = [
             'article' => $selectedArticle,
             'relatedArticles' => $this->allArticles,

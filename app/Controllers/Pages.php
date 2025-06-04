@@ -33,4 +33,5 @@ class Pages extends BaseController
     {
         return view('insomnia'); // gangguan tidur
     }
+    
 }
