@@ -11,7 +11,6 @@
 <body>
     <div class="container">
         <h1>Depression Self-Check (PHQ-9)</h1>
-        <!-- Pastikan action form mengarah ke Questions::submit untuk kategori 'depression' -->
         <form method="post" action="<?= base_url('questions/depression') ?>">
             <p>Dalam 2 minggu terakhir, seberapa sering kamu terganggu oleh masalah-masalah berikut?</p>
 
@@ -34,7 +33,7 @@
                 2 => "Beberapa hari",
                 3 => "Lebih dari separuh hari",
                 4 => "Hampir setiap hari",
-                5 => "Setiap hari" // Menambahkan opsi 5 untuk "Setiap hari"
+                5 => "Setiap hari"
             ];
 
             foreach ($questions as $i => $q) {
@@ -42,8 +41,8 @@
                 echo "<label><strong>Pertanyaan " . ($i + 1) . ":</strong> $q</label><br>";
                 foreach ($scaleOptions as $value => $label) {
                     echo "<label>
-                            <input type='radio' name='q" . $i . "' value='$value' required> $label
-                          </label><br>"; // Tambahkan <br> agar pilihan ke bawah
+                                <input type='radio' name='q" . ($i + 1) . "' value='$value' required> $label
+                            </label><br>"; // <-- PERUBAHAN DI SINI: name='q" . ($i + 1) . "'
                 }
                 echo "</div><hr>";
             }

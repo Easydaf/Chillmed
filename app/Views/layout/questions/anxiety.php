@@ -11,7 +11,6 @@
 <body>
     <div class="container">
         <h1>Anxiety Disorder Self-Check</h1>
-        <!-- Ubah action form agar mengarah ke Questions::submit -->
         <form method="post" action="<?= base_url('questions/anxiety') ?>">
             <p>Dalam 2 minggu terakhir, seberapa sering kamu mengalami hal berikut?</p>
 
@@ -30,12 +29,13 @@
 
             foreach ($questions as $i => $q) {
                 echo "<div class='question'>";
-                // Perhatikan nama input: q0, q1, dst. Jika ingin q1, q2, dst. ubah $i menjadi ($i + 1)
+                // Perhatikan PERUBAHAN DI SINI: name='q" . ($i + 1) . "'
+                // Ini akan menghasilkan nama input: q1, q2, ..., q9
                 echo "<label><strong>Pertanyaan " . ($i + 1) . ":</strong> $q</label><br>";
                 for ($j = 1; $j <= 5; $j++) {
                     echo "<label>
-                            <input type='radio' name='q" . $i . "' value='$j' required> $j
-                        </label> ";
+                                <input type='radio' name='q" . ($i + 1) . "' value='$j' required> $j
+                            </label> ";
                 }
                 echo "</div><hr>";
             }

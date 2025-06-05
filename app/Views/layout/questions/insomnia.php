@@ -11,7 +11,6 @@
 <body>
     <div class="container">
         <h1>Insomnia Self-Check</h1>
-        <!-- Pastikan action form mengarah ke Questions::submit untuk kategori 'insomnia' -->
         <form method="post" action="<?= base_url('questions/insomnia') ?>">
             <p>Dalam 2 minggu terakhir, seberapa sering kamu mengalami hal berikut?</p>
 
@@ -42,8 +41,8 @@
                 echo "<label><strong>Pertanyaan " . ($i + 1) . ":</strong> $q</label><br>";
                 foreach ($scaleOptions as $value => $label) {
                     echo "<label>
-                            <input type='radio' name='q" . $i . "' value='$value' required> $label
-                          </label><br>";
+                                <input type='radio' name='q" . ($i + 1) . "' value='$value' required> $label
+                            </label><br>"; // <-- PERUBAHAN DI SINI: name='q" . ($i + 1) . "'
                 }
                 echo "</div><hr>";
             }
