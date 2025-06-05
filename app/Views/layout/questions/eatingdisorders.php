@@ -11,7 +11,7 @@
 <body>
     <div class="container">
         <h1>Eating Disorder Self-Check</h1>
-        <form method="post" action="<?= base_url('questions/eatingdisorder') ?>">
+        <form method="post" action="<?= base_url('questions/eatingdisorders') ?>">
             <p>Dalam 2 minggu terakhir, seberapa sering kamu mengalami hal berikut?</p>
 
             <?php

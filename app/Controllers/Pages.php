@@ -26,12 +26,11 @@ class Pages extends BaseController
 
     public function eatingdisorder()
     {
-        return view('eatingdisorder'); // gangguan makan
+        return view('eatingdisorders'); // gangguan makan
     }
 
     public function insomnia()
     {
         return view('insomnia'); // gangguan tidur
     }
-    
 }
