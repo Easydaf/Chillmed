@@ -9,7 +9,7 @@
 }
 
 body {
-  background-color: #f0f4f4;
+  background-color: #8ed2c9;
   color: #333;
 }
 .navbar {
@@ -69,7 +69,7 @@ main {
   text-align: center;
   margin-bottom: 2rem;
   font-size: 2rem;
-  color: #333;
+  color: #00796b;
   font-weight: 600;
 }
 
@@ -128,7 +128,7 @@ main {
 
 /* CSS dari artikeldetail.php (bagian yang sama mungkin diduplikasi, ini tidak masalah) */
 body {
-  background-color: #f4f7f7; /* Ada sedikit perbedaan background-color di sini */
+  background-color: #e0f5f0; /* Ada sedikit perbedaan background-color di sini */
   color: #333;
 }
 

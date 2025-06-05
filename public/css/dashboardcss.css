@@ -112,6 +112,17 @@ nav ul li a:hover {
   transform: translateY(-5px);
 }
 
+/* --- Tambahan CSS untuk menghilangkan garis bawah pada link di dalam feature-card --- */
+.feature-card a {
+  text-decoration: none; /* Menghilangkan garis bawah */
+  color: #00a99d; /* Mengatur warna teks link sesuai warna h3 di feature-card */
+}
+
+.feature-card a:hover {
+  color: #00695c; /* Mengubah warna teks link saat di-hover */
+}
+/* ------------------------------------------------------------------------------- */
+
 .feature-card h3 {
   color: #00a99d;
   margin-bottom: 10px;

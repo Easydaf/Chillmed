@@ -25,7 +25,7 @@ body {
   font-size: 1.2rem;
   border-bottom: 1px solid #ddd;
   flex-shrink: 0;
-  
+
   /* Tambahan untuk menata elemen di header */
   display: flex; /* Aktifkan flexbox */
   align-items: center; /* Pusatkan item secara vertikal */
@@ -38,8 +38,10 @@ body {
   position: absolute; /* Posisikan secara absolut */
   left: 16px; /* Jarak dari kiri */
   top: 50%; /* Mulai dari tengah vertikal */
-  transform: translateY(-50%); /* Geser ke atas 50% dari tingginya sendiri untuk pusatkan */
-  
+  transform: translateY(
+    -50%
+  ); /* Geser ke atas 50% dari tingginya sendiri untuk pusatkan */
+
   background: none;
   border: none;
   font-size: 1.5rem; /* Ukuran ikon */
