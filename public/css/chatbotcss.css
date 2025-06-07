@@ -33,6 +33,7 @@ body {
   position: relative; /* Penting untuk posisi absolut dari judul */
 }
 
+
 .back-button {
   /* Posisi tombol kembali di pojok kiri */
   position: absolute; /* Posisikan secara absolut */
@@ -62,6 +63,10 @@ body {
   text-align: center; /* Pusatkan teks di dalam elemen */
   flex-grow: 1; /* Biarkan judul mengambil ruang sisa untuk membantu pemusatan */
   color: #00695c; /* Warna teks yang lebih menonjol */
+}
+
+.header-title strong {
+  color: #00a99d; /* Tebalkan teks untuk penekanan */
 }
 
 .chat-box {
