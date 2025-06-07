@@ -30,7 +30,7 @@ class Questions extends BaseController
     {
         $allowed = ['anxiety', 'depression', 'ducksyndrome', 'eatingdisorders', 'insomnia', 'burnout'];
         if (!in_array($kategori, $allowed)) {
-            return redirect()->to('/hasil')->with('error', 'Kategori pertanyaan tidak valid.');
+            return redirect()->to('/Ahasil')->with('error', 'Kategori pertanyaan tidak valid.');
         }
 
         $total = 0;
