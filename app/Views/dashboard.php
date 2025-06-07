@@ -12,7 +12,13 @@
     <header class="navbar">
         <div class="logo">Chill<span>Med</span></div>
         <div class="nav-buttons">
-            <a href="<?= base_url('/') ?>" class="btn-logout">Logout</a>
+            <?php
+            // Cek apakah user sudah login dan role-nya adalah 'admin'
+            if (session()->get('isLoggedIn') && session()->get('user')['role'] === 'admin'):
+            ?>
+                <a href="<?= base_url('admin') ?>" class="btn-admin">Admin Dashboard</a>
+            <?php endif; ?>
+            <a href="<?= base_url('logout') ?>" class="btn-logout">Logout</a>
         </div>
     </header>
     <section class="hero">

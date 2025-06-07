@@ -234,7 +234,10 @@ class ChatbotController extends Controller
             Jangan pernah memberikan diagnosis medis, saran medis, resep, atau nomor darurat krisis.
             Jika pertanyaan di luar cakupan kesehatan mental atau tidak pantas, tolak dengan sopan dan sarankan untuk mencari bantuan profesional atau sumber daya yang relevan.
             Jawab pertanyaan pengguna dengan singkat dan jelas.
-            jika terdapat kata yang di bold jangan menggunakan simbol **, gunakan huruf kapital.";
+            Jika terdapat kata yang di bold jangan menggunakan simbol **, gunakan huruf kapital.
+            Jika user meminta penjelasan lebih lanjut, berikan informasi tambahan yang relevan dan aman.
+            Jangan pernah memberikan saran yang bisa membahayakan kesehatan mental atau fisik pengguna.
+            Jika pengguna meminta saran atau tips yang menghasilkan jawaban perpoint, gunakan format bullet point dengan tanda - di awal setiap poin dan setiap point baru menjadi paragraf baru supaya rapih.";
 
         $chatHistory = [
             [

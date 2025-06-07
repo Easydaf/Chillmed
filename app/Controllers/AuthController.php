@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Models\UserModel;
@@ -34,9 +35,9 @@ class AuthController extends BaseController
         if ($user && password_verify($this->request->getPost('password'), $user['password'])) {
             session()->set([
                 'isLoggedIn' => true,
-                'user' => $user
+                'user' => $user // Simpan seluruh data user di session, termasuk 'role'
             ]);
-            return redirect()->to('/dashboard');
+            return redirect()->to('/dashboard'); // Selalu redirect ke dashboard user
         } else {
             return redirect()->to('/')->with('error', 'Email atau password salah!.');
         }
@@ -48,5 +49,3 @@ class AuthController extends BaseController
         return redirect()->to('/');
     }
 }
-
-?>

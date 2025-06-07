@@ -27,5 +27,21 @@ $routes->get('/hasil/(:segment)', 'Hasil::index/$1'); // <-- TAMBAHKAN ATAU BETU
 // HAPUS RUTE INI JIKA
 $routes->get('dashboard', 'DashboardController::index', ['filter' => 'auth']);
 
+$routes->group('admin', ['filter' => 'adminAuth'], static function ($routes) {
+    $routes->get('/', 'AdminController::index'); // Dashboard Admin
+
+    // Manajemen Quotes
+    $routes->get('quotes', 'AdminController::quotes'); // Tampilkan daftar quotes
+    $routes->post('quotes/add', 'AdminController::addQuote'); // Tambah quote (via AJAX)
+    $routes->post('quotes/edit/(:num)', 'AdminController::editQuote/$1'); // Edit quote (via AJAX)
+    $routes->post('quotes/delete/(:num)', 'AdminController::deleteQuote/$1'); // Hapus quote (via AJAX)
+
+    // Manajemen Artikel
+    $routes->get('articles', 'AdminController::articles'); // Tampilkan daftar artikel
+    $routes->match(['get', 'post'], 'articles/add', 'AdminController::addArticle'); // Tambah artikel (GET untuk form, POST untuk submit)
+    $routes->match(['get', 'post'], 'articles/edit/(:num)', 'AdminController::editArticle/$1'); // Edit artikel (GET untuk form, POST untuk submit)
+    $routes->post('articles/delete/(:num)', 'AdminController::deleteArticle/$1'); // Hapus artikel (via AJAX)
+});
+
 $routes->get('/artikel', 'Artikel::home');
 $routes->get('/artikel/detail/(:segment)', 'Artikel::detail/$1');
