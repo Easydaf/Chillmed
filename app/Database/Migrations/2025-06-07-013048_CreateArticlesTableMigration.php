@@ -21,6 +21,11 @@ class CreateArticlesTable extends Migration
                 'constraint'  => '255',
                 'null'        => false,
             ],
+            'image' => [ // Nama file gambar artikel
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+                'null'       => true, // Boleh kosong jika tidak ada gambar
+            ],
             'content' => [ // Changed from 'author', now for the article's body
                 'type'        => 'TEXT', // Use TEXT for the main content of the article
                 'null'        => false,
