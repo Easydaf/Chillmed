@@ -24,15 +24,16 @@ body {
 }
 
 .logo {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: bold;
   color: #00a99d;
   margin: 0; /* Hapus margin default h2 */
   flex-grow: 1; /* Biarkan judul mengambil ruang sisa untuk membantu pemusatan */
+  font-family: "Segoe UI", sans-serif;
 }
 
 .logo span {
-  color: #00695c;
+  color: #0b0f0e;
 }
 
 nav ul {

@@ -62,7 +62,7 @@ body {
   margin: 0; /* Hapus margin default h2 */
   text-align: center; /* Pusatkan teks di dalam elemen */
   flex-grow: 1; /* Biarkan judul mengambil ruang sisa untuk membantu pemusatan */
-  color: #00695c; /* Warna teks yang lebih menonjol */
+  color: #0e1413; /* Warna teks yang lebih menonjol */
 }
 
 .header-title strong {
