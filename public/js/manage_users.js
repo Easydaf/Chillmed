@@ -27,68 +27,117 @@ $(document).ready(function() {
     $('.role-select').on('change', function() {
         const userId = $(this).data('user-id');
         const newRole = $(this).val();
-        const userName = $(`#user-item-${userId} td[data-label="Nama"]`).text(); // Ambil nama user
+        const userName = $(`#user-item-${userId} td[data-label="Nama"]`).text();
 
         // Simpan role saat ini untuk kemungkinan rollback jika konfirmasi dibatalkan
-        $(this).data('current-role', $(this).find('option:selected').data('initial-role') || $(this).val());
+        const currentRole = $(this).data('current-role'); // Ambil dari data attribute, bukan dari .val()
+        $(this).data('current-role', newRole); // Update data-attribute for next change
 
-
-        if (confirm(`Anda yakin ingin mengubah role ${userName} menjadi ${newRole}?`)) {
-            let formData = {};
-            formData['role'] = newRole;
-            
-            if (csrfName && csrfHash) {
-                formData[csrfName] = csrfHash;
-            }
-
-            const targetUrl = baseUrl + 'admin/users/edit-role/' + userId;
-            console.log("Sending AJAX POST to:", targetUrl, "Data:", formData);
-
-            $.ajax({
-                url: targetUrl,
-                method: 'POST',
-                data: formData,
-                dataType: 'json',
-                success: function(response) {
-                    if (response.status === 'success') {
-                        alert(response.message);
-                        // Perbarui data-current-role di dropdown setelah sukses
-                        $(`.role-select[data-user-id="${userId}"]`).data('current-role', newRole);
-                    } else {
-                        alert('Error: ' + response.message);
-                        // Rollback dropdown jika gagal
-                        $(`.role-select[data-user-id="${userId}"]`).val($(`.role-select[data-user-id="${userId}"]`).data('current-role'));
-                    }
-                },
-                error: function(xhr, status, error) {
-                    let errorMessage = 'Terjadi kesalahan server: ' + xhr.status + ' ' + xhr.statusText;
-                    if (xhr.responseText) {
-                        try {
-                            const jsonResponse = JSON.parse(xhr.responseText);
-                            if (jsonResponse.message) {
-                                errorMessage += '. Detail: ' + jsonResponse.message;
-                            }
-                        } catch (e) {
-                            errorMessage += '. Response: ' + xhr.responseText.substring(0, 100) + '...';
-                        }
-                    }
-                    alert(errorMessage);
-                    console.error('AJAX Error:', xhr.status, xhr.statusText, xhr.responseText);
-                    // Rollback dropdown jika ada error AJAX
-                    $(`.role-select[data-user-id="${userId}"]`).val($(`.role-select[data-user-id="${userId}"]`).data('current-role'));
+        Swal.fire({
+            title: 'Konfirmasi Perubahan Role',
+            text: `Anda yakin ingin mengubah role ${userName} menjadi ${newRole}?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#00796b',
+            cancelButtonColor: '#f44336',
+            confirmButtonText: 'Ya, Ubah Role!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let formData = {};
+                formData['role'] = newRole;
+                
+                if (csrfName && csrfHash) {
+                    formData[csrfName] = csrfHash;
                 }
-            });
-        } else {
-            // Jika user membatalkan, kembalikan pilihan dropdown ke nilai semula
-            $(this).val($(this).data('current-role'));
-        }
+
+                const targetUrl = baseUrl + 'admin/users/edit-role/' + userId;
+                console.log("Sending AJAX POST to:", targetUrl, "Data:", formData);
+
+                $.ajax({
+                    url: targetUrl,
+                    method: 'POST',
+                    data: formData,
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            Swal.fire(
+                                'Berhasil!',
+                                response.message,
+                                'success'
+                            );
+                            // Update data-current-role di dropdown setelah sukses
+                            $(`.role-select[data-user-id="${userId}"]`).data('current-role', newRole);
+                        } else {
+                            Swal.fire(
+                                'Gagal!',
+                                response.message,
+                                'error'
+                            );
+                            // Rollback dropdown jika gagal
+                            $(`.role-select[data-user-id="${userId}"]`).val(currentRole);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        let errorMessage = 'Terjadi kesalahan server: ' + xhr.status + ' ' + xhr.statusText;
+                        if (xhr.responseText) {
+                            try {
+                                const jsonResponse = JSON.parse(xhr.responseText);
+                                if (jsonResponse.message) {
+                                    errorMessage += '. Detail: ' + jsonResponse.message;
+                                }
+                            } catch (e) {
+                                errorMessage += '. Response: ' + xhr.responseText.substring(0, 100) + '...';
+                            }
+                        }
+                        Swal.fire(
+                            'Error!',
+                            errorMessage,
+                            'error'
+                        );
+                        console.error('AJAX Error:', xhr.status, xhr.statusText, xhr.responseText);
+                        // Rollback dropdown jika ada error AJAX
+                        $(`.role-select[data-user-id="${userId}"]`).val(currentRole);
+                    }
+                });
+            } else {
+                // Jika user membatalkan, kembalikan pilihan dropdown ke nilai semula
+                $(this).val(currentRole);
+            }
+        });
     });
 
-    // Fungsi untuk inisialisasi data-current-role saat halaman dimuat
+    // Handle klik tombol hapus user
+    $('.btn-delete').on('click', function() {
+        const userId = $(this).data('user-id');
+        const userName = $(this).data('user-name');
+
+        Swal.fire({
+            title: 'Konfirmasi Penghapusan',
+            text: `Anda yakin ingin menghapus user ${userName} (ID: ${userId})? Aksi ini tidak dapat dibatalkan!`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Jika dikonfirmasi, kirim form POST untuk penghapusan (full page refresh)
+                const deleteForm = $(`<form action="${baseUrl}admin/users/delete/${userId}" method="post"></form>`);
+                if (csrfName && csrfHash) {
+                    deleteForm.append(`<input type="hidden" name="${csrfName}" value="${csrfHash}">`);
+                }
+                $('body').append(deleteForm);
+                deleteForm.submit(); // Submit form
+            }
+        });
+    });
+
+    // Inisialisasi data-current-role saat halaman dimuat
+    // agar dropdown bisa kembali ke nilai awal jika dibatalkan
     $('.role-select').each(function() {
-        $(this).data('current-role', $(this).val());
+        // Simpan nilai awal dari HTML attribute untuk digunakan sebagai current-role
+        $(this).data('current-role', $(this).attr('data-current-role'));
     });
-
-    // Catatan: Fungsi hapus user tidak di sini, karena form delete sudah langsung di HTML
-    // dengan onsubmit="return confirm(...)"
 });

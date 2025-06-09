@@ -25,7 +25,7 @@
             <button type="submit" class="btn">Register</button>
 
             <p class="small-text">
-                Already Have Account? <a href="<?= base_url('/') ?>">LogIn</a>
+                Already Have Account? <a href="<?= base_url('/') ?>">Login</a>
             </p>
         </form>
     </div>

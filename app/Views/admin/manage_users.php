@@ -5,14 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= esc($pageTitle ?? 'Manajemen Users') ?></title>
     <link rel="stylesheet" href="<?= base_url('css/admincss.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('css/manage_userscss.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css/manage_users.css') ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <!-- --- Mulai Tambahkan CDN SweetAlert CSS di sini --- -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.min.css">
-    <!-- --- Selesai Tambahkan CDN SweetAlert CSS di sini --- -->
-
     <?= csrf_meta() ?>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.min.css">
 </head>
 <body>
     <div class="navbar">
@@ -29,12 +27,14 @@
         <h1><?= esc($pageTitle) ?></h1>
 
         <?php if (session()->getFlashdata('success')): ?>
-            <!-- Alert success bawaan masih bisa ditampilkan atau diganti SweetAlert jika diinginkan -->
-            <div class="alert success"><?= session()->getFlashdata('success') ?></div>
+            <div class="alert success" style="display:none;" data-sweetalert-type="success">
+                <?= session()->getFlashdata('success') ?>
+            </div>
         <?php endif; ?>
         <?php if (session()->getFlashdata('error')): ?>
-            <!-- Alert error bawaan masih bisa ditampilkan atau diganti SweetAlert jika diinginkan -->
-            <div class="alert error"><?= session()->getFlashdata('error') ?></div>
+            <div class="alert error" style="display:none;" data-sweetalert-type="error">
+                <?= session()->getFlashdata('error') ?>
+            </div>
         <?php endif; ?>
 
         <?php if (!empty($users)): ?>
@@ -59,7 +59,7 @@
                                 <?php if ($user['id'] == session()->get('user')['id']): ?>
                                     <span class="current-role"><?= esc($user['role']) ?></span> (Anda)
                                 <?php else: ?>
-                                    <select class="role-select" data-user-id="<?= esc($user['id']) ?>" data-initial-role="<?= esc($user['role']) ?>">
+                                    <select class="role-select" data-user-id="<?= esc($user['id']) ?>" data-current-role="<?= esc($user['role']) ?>">
                                         <option value="user" <?= ($user['role'] === 'user') ? 'selected' : '' ?>>User</option>
                                         <option value="admin" <?= ($user['role'] === 'admin') ? 'selected' : '' ?>>Admin</option>
                                     </select>
@@ -68,11 +68,7 @@
                             <td data-label="Tanggal Registrasi"><?= esc($user['created_at']) ?></td>
                             <td class="item-actions">
                                 <?php if ($user['id'] != session()->get('user')['id']): ?>
-                                    <!-- Form delete diubah, tanpa onsubmit confirm, akan ditangani oleh JS -->
-                                    <form class="delete-user-form" data-user-id="<?= esc($user['id']) ?>" data-user-name="<?= esc($user['name']) ?>" action="<?= base_url('admin/users/delete/' . esc($user['id'])) ?>" method="post" style="display:inline;">
-                                        <?= csrf_field() ?>
-                                        <button type="submit" class="btn-delete">Hapus</button>
-                                    </form>
+                                    <button class="btn-delete" data-user-id="<?= esc($user['id']) ?>" data-user-name="<?= esc($user['name']) ?>">Hapus</button>
                                 <?php else: ?>
                                     <button class="btn-delete" disabled title="Tidak bisa menghapus akun Anda sendiri">Hapus</button>
                                 <?php endif; ?>
@@ -88,14 +84,37 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- --- Mulai Tambahkan CDN SweetAlert JavaScript di sini --- -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.all.min.js"></script>
-    <!-- --- Selesai Tambahkan CDN SweetAlert JavaScript di sini --- -->
-    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.all.min.js"></script>
     <script>
         window.baseUrl = '<?= base_url() ?>';
-        // console.log("Base URL for manage_users.js:", window.baseUrl); // Untuk debugging
     </script>
     <script src="<?= base_url('js/manage_users.js') ?>"></script>
+
+    <script>
+    // Tampilkan SweetAlert dari flashdata saat halaman dimuat
+    $(document).ready(function() {
+        const successMessage = $('.alert.success').text().trim();
+        const errorMessage = $('.alert.error').text().trim();
+
+        if (successMessage) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: successMessage,
+                showConfirmButton: false,
+                timer: 2000
+            });
+        }
+        if (errorMessage) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                text: errorMessage,
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }
+    });
+    </script>
 </body>
 </html>

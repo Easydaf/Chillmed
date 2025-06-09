@@ -1,0 +1,213 @@
+/* public/css/manage_articles.css */
+
+/* Gaya untuk tabel artikel */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    font-size: 0.95em;
+    border-radius: 8px; /* Sudut membulat untuk tabel */
+    overflow: hidden; /* Memastikan sudut membulat terlihat */
+}
+
+.data-table th, .data-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.data-table th {
+    background-color: #00796b; /* Warna header tabel sesuai tema ChillMed */
+    color: white;
+    font-weight: bold;
+}
+
+.data-table tr:nth-child(even) {
+    background-color: #f2f2f2; /* Warna latar belakang selang-seling */
+}
+
+/* Gaya untuk thumbnail gambar artikel di tabel */
+.article-image-thumb {
+    max-width: 80px;
+    max-height: 50px;
+    object-fit: cover; /* Memastikan gambar terpotong rapi */
+    border-radius: 4px;
+}
+
+/* Gaya untuk tombol aksi (Edit/Hapus) */
+.item-actions a, .item-actions button {
+    background-color: #2196f3; /* Warna biru untuk Edit */
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease;
+    margin-right: 5px; /* Jarak antar tombol */
+}
+
+.item-actions a:hover {
+    background-color: #0b7dda; /* Warna hover edit */
+}
+
+.item-actions button {
+    background-color: #f44336; /* Warna merah untuk Delete */
+}
+
+.item-actions button:hover {
+    background-color: #d32f2f; /* Warna hover delete */
+}
+
+/* Gaya untuk tombol "Tambah Artikel" */
+.add-button {
+    background-color: #00796b;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-bottom: 20px;
+    display: inline-block;
+    text-decoration: none; /* Untuk link */
+    transition: background-color 0.3s;
+}
+.add-button:hover {
+    background-color: #005f4f;
+}
+
+/* Gaya untuk form (Tambah/Edit Artikel) */
+.form-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    max-width: 800px;
+    margin: 30px auto;
+}
+.form-container label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+.form-container input[type="text"],
+.form-container textarea,
+.form-container input[type="file"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+}
+.form-container textarea {
+    min-height: 200px;
+    resize: vertical;
+}
+.form-actions {
+    text-align: right;
+    margin-top: 20px;
+}
+.btn-submit {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+.btn-submit:hover {
+    background-color: #45a049;
+}
+.btn-cancel {
+    background-color: #9e9e9e;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    text-decoration: none;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+}
+.btn-cancel:hover {
+    background-color: #757575;
+}
+.current-image {
+    max-width: 200px;
+    height: auto;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Pesan "Belum ada artikel" */
+.no-data-message {
+    text-align: center;
+    color: #666;
+    margin-top: 30px;
+    font-style: italic;
+    font-size: 1.1em;
+}
+
+/* Responsiveness untuk tabel */
+@media (max-width: 768px) {
+    .data-table, .data-table tbody, .data-table thead, .data-table tr, .data-table th, .data-table td {
+        display: block; /* Membuat tabel responsif */
+    }
+
+    .data-table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .data-table tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .data-table td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+    }
+
+    .data-table td:last-child {
+        border-bottom: none;
+    }
+
+    .data-table td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 45%;
+        padding-left: 15px;
+        font-weight: bold;
+        text-align: left;
+        color: #555;
+    }
+
+    .item-actions {
+        text-align: right;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-top: 1px solid #eee;
+        display: block;
+    }
+}

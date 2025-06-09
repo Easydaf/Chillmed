@@ -6,23 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ChillMed</title>
     <link rel="stylesheet" href="<?= base_url('css/dashboardcss.css') ?>" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.min.css">
 </head>
 
 <body>
     <header class="navbar">
-        <div class="logo">Chill<span>Med</span></div>
+        <div class="logo"><strong>Chill</strong>Med</div>
         <div class="nav-buttons">
             <?php
             if (session()->get('isLoggedIn') && session()->get('user')['role'] === 'admin'):
             ?>
-                <a href="<?= base_url('admin') ?>" class="btn-admin">Admin Dashboard</a>
+                <a href="<?= base_url('admin') ?>" class="btn admin">Admin Dashboard</a>
             <?php endif; ?>
-            <a href="<?= base_url('logout') ?>" class="btn-logout">Logout</a>
+            <a href="#" class="btn logout" id="logoutButton">Logout</a>
         </div>
     </header>
     <section class="hero">
         <div class="quote-top">
-            <p id="quote">"Memuat quote..."</p> </div>
+            <p id="quote">"Memuat quote..."</p>
+        </div>
     </section>
 
     <section class="features-section">
@@ -51,6 +53,9 @@
         </div>
     </section>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.all.min.js"></script>
+
     <script>
         // Menerima data quotes dari PHP (JSON string) dan menggunakannya di JavaScript
         const quotesData = <?= $quotesJson ?? '[]' ?>;
@@ -58,7 +63,7 @@
         let currentQuoteIndex = 0;
         const quoteElement = document.getElementById("quote");
 
-        // Fallback quotes jika database kosong (sangat disarankan)
+        // Fallback quotes jika database kosong
         const fallbackQuotes = [
             "Kamu cukup, bahkan ketika kamu merasa tidak.",
             "Satu langkah kecil tetaplah kemajuan.",
@@ -100,6 +105,32 @@
 
         // Ganti quote setiap 5 detik
         setInterval(changeQuote, 5000);
+
+
+        // SweetAlert Konfirmasi Logout
+        document.addEventListener('DOMContentLoaded', function() {
+            const logoutButton = document.getElementById('logoutButton');
+
+            logoutButton.addEventListener('click', function(e) {
+                e.preventDefault(); // Mencegah navigasi langsung
+                
+                Swal.fire({
+                    title: 'Konfirmasi Logout',
+                    text: 'Anda yakin ingin logout dari akun ini?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#00796b',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Logout!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Jika user mengkonfirmasi, baru lakukan navigasi ke URL logout
+                        window.location.href = '<?= base_url('logout') ?>';
+                    }
+                });
+            });
+        });
     </script>
 </body>
 

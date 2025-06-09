@@ -30,8 +30,8 @@ $routes->group('admin', ['filter' => 'adminAuth'], static function ($routes) {
 
     // --- Rute POST/MATCH (CRUD) - Paling atas dan spesifik ---
     // Manajemen Quotes
-    $routes->match(['GET', 'POST'], 'quotes/add', 'AdminController::addQuote'); // UBAH INI
-    $routes->post('quotes/edit/(:num)', 'AdminController::editQuote/$1');
+    $routes->match(['GET', 'POST'], 'quotes/add', 'AdminController::addQuote');
+    $routes->match(['GET', 'POST'], 'quotes/edit/(:num)', 'AdminController::editQuote/$1'); // Ubah dari post() menjadi match(['GET','POST'])
     $routes->post('quotes/delete/(:num)', 'AdminController::deleteQuote/$1');
 
     // Manajemen Artikel
@@ -40,9 +40,8 @@ $routes->group('admin', ['filter' => 'adminAuth'], static function ($routes) {
     $routes->post('articles/delete/(:num)', 'AdminController::deleteArticle/$1');
 
     // Manajemen Users
-    $routes->post('users/edit-role/(:num)', 'AdminController::editUserRole/$1'); // AJAX POST untuk edit role
-    $routes->post('users/delete/(:num)', 'AdminController::deleteUser/$1'); // POST dari form HTML untuk hapus
-    $routes->get('users', 'AdminController::users'); // GET untuk menampilkan daftar user
+    $routes->post('users/edit-role/(:num)', 'AdminController::editUserRole/$1');
+    $routes->post('users/delete/(:num)', 'AdminController::deleteUser/$1');
 
     // --- Rute GET (Untuk menampilkan halaman) - Setelah rute POST/MATCH ---
     $routes->get('/', 'AdminController::index'); // Dashboard Admin

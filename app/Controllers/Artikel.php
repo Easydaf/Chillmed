@@ -4,59 +4,25 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use CodeIgniter\Helpers\url_helper;
+use App\Models\ArticleModel; // Import ArticleModel
 
 class Artikel extends BaseController
 {
-    private $allArticles = [
-        [
-            'title' => 'Apa Itu Gangguan Cemas? Penjelasan Lengkap dan Solusinya',
-            'image' => 'cemas.jpg',
-            'date' => '01/01/2025, 10:00 WITA',
-            'content' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-        ],
-        [
-            'title' => 'PTSD: Ketika Trauma Tak Hilang Meski Waktu Telah Berlalu',
-            'image' => 'ptsd.jpg',
-            'date' => '05/02/2025, 11:30 WITA',
-            'content' => 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.'
-        ],
-        [
-            'title' => 'Kuliah Kok Capek Terus? Kenali Tanda-Tanda Burnout Sebelum Terlambat',
-            'image' => 'burnout.jpg',
-            'date' => '20/05/2025, 14:00 WITA',
-            'content' => 'BANJARMASIN, ChillMed.com  Kamu merasa capek terus meskipun tidak sedang banyak tugas? Semangat belajar hilang, mudah marah, atau merasa semua jadi beban? Bisa jadi kamu sedang mengalami burnout. Burnout adalah kondisi kelelahan fisik, emosional, dan mental yang disebabkan oleh stres berkepanjangan, terutama ketika seseorang merasa kewalahan, terlalu banyak tuntutan, dan tidak memiliki cukup waktu atau energi untuk menghadapinya. Walaupun sering dikaitkan dengan dunia kerja, burnout juga sangat umum terjadi pada mahasiswa.
-
-            Burnout berbeda dengan malas. Malas biasanya terjadi sesekali dan bisa hilang dengan motivasi atau dorongan kecil. Burnout bukan sekadar malas: ia melibatkan kelelahan yang dalam dan terus-menerus, bahkan untuk hal-hal yang dulu kamu sukai dan kuasai.'
-        ],
-        [
-            'title' => 'Tidur Tak Nyenyak Sejak Masuk Kuliah? Bisa Jadi Kamu Alami Sleep Disorder',
-            'image' => 'sleepdisorder.jpg',
-            'date' => '10/03/2025, 09:00 WITA',
-            'content' => 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.'
-        ],
-        [
-            'title' => 'Malu Makan di Depan Teman? Bisa Jadi Itu Awal dari Eating Disorder',
-            'image' => 'eating.jpg',
-            'date' => '15/04/2025, 16:00 WITA',
-            'content' => 'Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.'
-        ],
-        [
-            'title' => 'Cek Pintu Berkali-Kali Sebelum Berangkat Kuliah? Waspadai OCD',
-            'image' => 'ocd.webp',
-            'date' => '25/05/2025, 10:30 WITA',
-            'content' => 'Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.'
-        ],
-    ];
+    protected $articleModel;
 
     public function __construct()
     {
-        helper('url');
+        $this->articleModel = new ArticleModel();
+        helper('url'); // Pastikan helper 'url' dimuat
     }
 
     public function home()
     {
+        // Ambil semua artikel dari database
+        $articles = $this->articleModel->orderBy('created_at', 'DESC')->findAll();
+
         $data = [
-            'articles' => $this->allArticles,
+            'articles' => $articles,
             'pageTitle' => 'Daftar Artikel ChillMed'
         ];
         return view('layout/artikel/artikelhome', $data);
@@ -68,8 +34,17 @@ class Artikel extends BaseController
             return redirect()->to(base_url('artikel'));
         }
 
+        // Cari artikel berdasarkan slug.
+        // Anda perlu menambahkan kolom 'slug' ke tabel artikel jika ingin performa terbaik.
+        // Untuk saat ini, kita akan mencari secara manual dari semua artikel yang ada,
+        // yang mungkin kurang efisien untuk jumlah artikel yang sangat banyak.
+        // ALTERNATIF: Anda bisa menambahkan kolom 'slug' di DB dan mencari langsung berdasarkan slug
+        // $article = $this->articleModel->where('slug', $title_slug)->first();
+        
+        $allArticles = $this->articleModel->findAll();
         $selectedArticle = null;
-        foreach ($this->allArticles as $article) {
+        foreach ($allArticles as $article) {
+            // Bandingkan slug dari judul artikel di database dengan title_slug dari URL
             if (url_title($article['title'], '-', TRUE) === $title_slug) {
                 $selectedArticle = $article;
                 break;
@@ -80,13 +55,16 @@ class Artikel extends BaseController
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
 
+        // Ambil artikel terkait (kecuali artikel yang sedang dilihat)
+        // Batasi jumlah artikel terkait jika diperlukan, misalnya 3 atau 5 saja
         $relatedArticles = [];
         $countRelated = 0;
-        foreach ($this->allArticles as $article) {
-            if ($article['title'] !== $selectedArticle['title']) {
+        foreach ($allArticles as $article) {
+            // Pastikan ID berbeda dan ambil maksimal 5 artikel terkait
+            if ($article['id'] !== $selectedArticle['id']) {
                 $relatedArticles[] = $article;
                 $countRelated++;
-                if ($countRelated >= 5) break;
+                if ($countRelated >= 5) break; 
             }
         }
 

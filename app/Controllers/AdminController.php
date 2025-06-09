@@ -124,28 +124,29 @@ class AdminController extends BaseController
 
     public function addArticle()
     {
-        if ($this->request->getMethod() === 'post') {
+        if ($this->request->getMethod() === 'POST') { // PASTIKAN 'POST'
             $validation = \Config\Services::validation();
-            $validation->setRules([
+            $rules = [
                 'title'   => 'required|min_length[5]|max_length[255]',
                 'content' => 'required|min_length[20]',
-                'image'   => 'uploaded[image]|max_size[image,1024]|is_image[image]',
-            ]);
+                'image'   => 'uploaded[image]|max_size[image,1024]|is_image[image]', // Validasi gambar
+            ];
+            $validation->setRules($rules);
 
             if ($validation->withRequest($this->request)->run()) {
                 $file = $this->request->getFile('image');
-                $newName = $file->getRandomName();
-                $file->move(FCPATH . 'images', $newName);
+                $newName = $file->getRandomName(); // Buat nama unik
+                $file->move(FCPATH . 'images', $newName); // Pindahkan ke public/images
 
                 $data = [
                     'title'   => $this->request->getPost('title'),
                     'content' => $this->request->getPost('content'),
                     'author'  => $this->request->getPost('author') ?? 'ChillMed Team',
-                    'image'   => $newName,
+                    'image'   => $newName, // Simpan nama file
                 ];
 
                 if ($this->articleModel->insert($data)) {
-                    return redirect()->to('/admin/articles')->with('success', 'Artikel berhasil ditambahkan!');
+                    return redirect()->to(base_url('admin/articles'))->with('success', 'Artikel berhasil ditambahkan!');
                 } else {
                     return redirect()->back()->withInput()->with('error', 'Gagal menambahkan artikel.');
                 }
@@ -164,17 +165,16 @@ class AdminController extends BaseController
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
 
-        if ($this->request->getMethod() === 'post') {
+        if ($this->request->getMethod() === 'POST') { // PASTIKAN 'POST'
             $validation = \Config\Services::validation();
             $rules = [
                 'title'   => 'required|min_length[5]|max_length[255]',
                 'content' => 'required|min_length[20]',
             ];
-
+            // Hanya validasi gambar jika ada yang diupload
             if ($this->request->getFile('image')->isValid() && ! $this->request->getFile('image')->hasMoved()) {
                 $rules['image'] = 'uploaded[image]|max_size[image,1024]|is_image[image]';
             }
-
             $validation->setRules($rules);
 
             if ($validation->withRequest($this->request)->run()) {
@@ -186,16 +186,17 @@ class AdminController extends BaseController
 
                 $file = $this->request->getFile('image');
                 if ($file->isValid() && ! $file->hasMoved()) {
+                    // Hapus gambar lama jika ada
                     if ($article['image'] && file_exists(FCPATH . 'images/' . $article['image'])) {
                         unlink(FCPATH . 'images/' . $article['image']);
                     }
                     $newName = $file->getRandomName();
                     $file->move(FCPATH . 'images', $newName);
-                    $data['image'] = $newName;
+                    $data['image'] = $newName; // Update nama file gambar baru
                 }
 
                 if ($this->articleModel->update($id, $data)) {
-                    return redirect()->to('/admin/articles')->with('success', 'Artikel berhasil diperbarui!');
+                    return redirect()->to(base_url('admin/articles'))->with('success', 'Artikel berhasil diperbarui!');
                 } else {
                     return redirect()->back()->withInput()->with('error', 'Gagal memperbarui artikel.');
                 }
@@ -203,33 +204,29 @@ class AdminController extends BaseController
                 return redirect()->back()->withInput()->with('errors', $validation->getErrors());
             }
         }
-
-        $data = [
-            'pageTitle' => 'Edit Artikel',
-            'article'   => $article,
-        ];
-        return view('admin/edit_article_form', $data);
+        return view('admin/edit_article_form', ['pageTitle' => 'Edit Artikel', 'article' => $article]);
     }
 
     public function deleteArticle($id)
     {
-        if ($this->request->isAJAX() && $this->request->getMethod() === 'post') {
+        if ($this->request->getMethod() === 'POST') { // PASTIKAN 'POST'
             $article = $this->articleModel->find($id);
             if ($article) {
+                // Hapus file gambar terkait jika ada
                 if ($article['image'] && file_exists(FCPATH . 'images/' . $article['image'])) {
                     unlink(FCPATH . 'images/' . $article['image']);
                 }
 
                 if ($this->articleModel->delete($id)) {
-                    return $this->response->setJSON(['status' => 'success', 'message' => 'Artikel berhasil dihapus!']);
+                    return redirect()->to(base_url('admin/articles'))->with('success', 'Artikel berhasil dihapus!');
                 } else {
-                    return $this->response->setJSON(['status' => 'error', 'message' => 'Gagal menghapus artikel.']);
+                    return redirect()->to(base_url('admin/articles'))->with('error', 'Gagal menghapus artikel.');
                 }
             } else {
-                return $this->response->setJSON(['status' => 'error', 'message' => 'Artikel tidak ditemukan.']);
+                return redirect()->to(base_url('admin/articles'))->with('error', 'Artikel tidak ditemukan.');
             }
         }
-        return $this->response->setStatusCode(405)->setJSON(['status' => 'error', 'message' => 'Metode tidak diizinkan.']);
+        return redirect()->to(base_url('admin/articles'))->with('error', 'Metode penghapusan tidak diizinkan.');
     }
 
     // --- Manajemen Users ---

@@ -17,8 +17,23 @@ body {
   align-items: center;
 }
 
-.btn-logout {
+.navbar .btn {
+  margin-left: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.logout {
   background-color: red;
+  color: white;
+  border: none;
+}
+
+.admin {
+  background-color: rgb(0, 255, 149);
   color: white;
   border: none;
 }
@@ -26,14 +41,14 @@ body {
 .logo {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #00a99d;
+  color: #0b0f0e;
   margin: 0; /* Hapus margin default h2 */
   flex-grow: 1; /* Biarkan judul mengambil ruang sisa untuk membantu pemusatan */
   font-family: "Segoe UI", sans-serif;
 }
 
-.logo span {
-  color: #0b0f0e;
+.logo strong {
+  color: #00a99d; /* Warna khas ChillMed */
 }
 
 nav ul {
@@ -138,8 +153,11 @@ nav ul li a:hover {
 
 .nav-buttons a {
   text-decoration: none;
-  margin-left: 12px;
+  padding: 0.5rem 1rem;
+  margin: 0 1rem;
+
+  margin-left: 0.5rem;
   padding: 8px 16px;
-  border-radius: 6px;
+  border-radius: 8px;
   font-weight: bold;
 }

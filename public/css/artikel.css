@@ -12,26 +12,23 @@ body {
   background-color: #8ed2c9;
   color: #333;
 }
-.navbar {
-  background-color: #ffffff;
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #ddd;
-}
 
 .logo {
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: bold;
+  color: #0b0f0e;
+  margin: 0; /* Hapus margin default h2 */
+  flex-grow: 1; /* Biarkan judul mengambil ruang sisa untuk membantu pemusatan */
+  font-family: "Segoe UI", sans-serif;
 }
 
-.logo .chill {
+.logo strong {
   color: #00a99d;
 }
 
 .logo .med {
   color: #333333;
+  font-family: "Segoe UI", sans-serif;
 }
 
 .navbar nav a {
@@ -141,10 +138,6 @@ body {
   border-bottom: 1px solid #ccc;
 }
 
-.logo {
-  font-size: 1.8rem; /* Ada sedikit perbedaan font-size di sini */
-  font-weight: 700;
-}
 
 .navbar .btn {
   margin-left: 0.5rem;
