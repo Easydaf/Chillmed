@@ -2,73 +2,88 @@
 
 namespace App\Controllers;
 
-use App\Models\ArticleModel;
 use App\Models\QuoteModel;
-
+use App\Models\ArticleModel;
+use App\Models\UserModel;
+use CodeIgniter\Controller;
 
 class AdminController extends BaseController
 {
     protected $quoteModel;
     protected $articleModel;
+    protected $userModel;
 
     public function __construct()
     {
-        // Pastikan Model sudah di-load di sini karena akan digunakan di AdminController
         $this->quoteModel = new QuoteModel();
         $this->articleModel = new ArticleModel();
+        $this->userModel = new UserModel();
     }
 
     // Dashboard Admin
     public function index()
     {
-        // Ambil data untuk ditampilkan di dashboard admin
         $totalQuotes = $this->quoteModel->countAllResults();
         $totalArticles = $this->articleModel->countAllResults();
+        $totalUsers = $this->userModel->countAllResults();
 
         $data = [
             'pageTitle'     => 'Dashboard Admin ChillMed',
             'totalQuotes'   => $totalQuotes,
             'totalArticles' => $totalArticles,
+            'totalUsers'    => $totalUsers,
         ];
-        // View ini akan diisi oleh tim frontend
-        return view('admin/admin', $data);
+        return view('admin/admin', $data); // Menggunakan admin/admin.php
     }
 
     // --- Manajemen Quotes ---
-
-    // Menampilkan daftar quotes
     public function quotes()
     {
         $data = [
             'pageTitle' => 'Manajemen Quotes',
-            'quotes'    => $this->quoteModel->findAll(), // Mengambil semua quotes dari database
+            'quotes'    => $this->quoteModel->findAll(),
         ];
-        // View ini akan diisi oleh tim frontend
         return view('admin/manage_quotes', $data);
     }
 
-    // Menambah quote baru (API endpoint, akan dipanggil dari AJAX form)
+    // UBAH FUNGSI addQuote INI
     public function addQuote()
     {
-        if ($this->request->isAJAX() && $this->request->getMethod() === 'post') {
-            $data = [
-                'quote_text' => $this->request->getPost('quote_text'),
-                'author'     => $this->request->getPost('author'),
+        // PERBAIKAN: Ubah 'post' menjadi 'POST' (huruf kapital)
+        if ($this->request->getMethod() === 'POST') {
+            // Logika pemrosesan form submit (POST)
+            $validation = \Config\Services::validation();
+            $rules = [
+                'quote_text' => 'required|min_length[5]|max_length[500]',
+                'author'     => 'permit_empty|max_length[100]',
             ];
+            $validation->setRules($rules);
 
-            if ($this->quoteModel->insert($data)) {
-                return $this->response->setJSON(['status' => 'success', 'message' => 'Quote berhasil ditambahkan!', 'id' => $this->quoteModel->getInsertID()]);
+            if ($validation->withRequest($this->request)->run()) {
+                $data = [
+                    'quote_text' => $this->request->getPost('quote_text'),
+                    'author'     => $this->request->getPost('author'),
+                ];
+
+                if ($this->quoteModel->insert($data)) {
+                    return redirect()->to(base_url('admin/quotes'))->with('success', 'Quote berhasil ditambahkan!');
+                } else {
+                    return redirect()->back()->withInput()->with('error', 'Gagal menambahkan quote.');
+                }
             } else {
-                return $this->response->setJSON(['status' => 'error', 'message' => 'Gagal menambahkan quote.']);
+                // Validasi gagal, kembali ke form dengan input dan error
+                return redirect()->back()->withInput()->with('errors', $validation->getErrors());
             }
         }
-        return $this->response->setStatusCode(405)->setJSON(['status' => 'error', 'message' => 'Metode tidak diizinkan.']);
+        // Menampilkan form tambah quote (GET)
+        return view('admin/quotes_add', ['pageTitle' => 'Tambah Quote Baru']);
     }
 
-    // Mengedit quote (API endpoint, akan dipanggil dari AJAX form)
+    // Metode untuk Edit Quote (Masih AJAX)
     public function editQuote($id)
     {
-        if ($this->request->isAJAX() && $this->request->getMethod() === 'post') {
+        // PERBAIKAN: Ubah 'post' menjadi 'POST' (huruf kapital)
+        if ($this->request->isAJAX() && $this->request->getMethod() === 'POST') {
             $data = [
                 'quote_text' => $this->request->getPost('quote_text'),
                 'author'     => $this->request->getPost('author'),
@@ -83,10 +98,11 @@ class AdminController extends BaseController
         return $this->response->setStatusCode(405)->setJSON(['status' => 'error', 'message' => 'Metode tidak diizinkan.']);
     }
 
-    // Menghapus quote (API endpoint, akan dipanggil dari AJAX)
+    // Metode untuk Delete Quote (Masih AJAX)
     public function deleteQuote($id)
     {
-        if ($this->request->isAJAX() && $this->request->getMethod() === 'post') {
+        // PERBAIKAN: Ubah 'post' menjadi 'POST' (huruf kapital)
+        if ($this->request->isAJAX() && $this->request->getMethod() === 'POST') {
             if ($this->quoteModel->delete($id)) {
                 return $this->response->setJSON(['status' => 'success', 'message' => 'Quote berhasil dihapus!']);
             } else {
@@ -97,18 +113,15 @@ class AdminController extends BaseController
     }
 
     // --- Manajemen Artikel ---
-
-    // Menampilkan daftar artikel
     public function articles()
     {
         $data = [
             'pageTitle' => 'Manajemen Artikel',
-            'articles'  => $this->articleModel->findAll(), // Mengambil semua artikel dari database
+            'articles'  => $this->articleModel->findAll(),
         ];
         return view('admin/manage_articles', $data);
     }
 
-    // Menampilkan form tambah artikel dan memproses submitnya
     public function addArticle()
     {
         if ($this->request->getMethod() === 'post') {
@@ -143,7 +156,6 @@ class AdminController extends BaseController
         return view('admin/add_article_form', ['pageTitle' => 'Tambah Artikel Baru']);
     }
 
-    // Menampilkan form edit artikel dan memproses submitnya
     public function editArticle($id)
     {
         $article = $this->articleModel->find($id);
@@ -218,5 +230,67 @@ class AdminController extends BaseController
             }
         }
         return $this->response->setStatusCode(405)->setJSON(['status' => 'error', 'message' => 'Metode tidak diizinkan.']);
+    }
+
+    // --- Manajemen Users ---
+    public function users()
+    {
+        $data = [
+            'pageTitle' => 'Manajemen Users',
+            'users'     => $this->userModel->findAll(), // Mengambil semua user dari database
+        ];
+        return view('admin/manage_users', $data);
+    }
+
+    // Mengedit role user (memproses AJAX POST)
+    public function editUserRole($id)
+    {
+        if ($this->request->isAJAX() && $this->request->getMethod() === 'POST') { // PASTIKAN 'POST'
+            $user = $this->userModel->find($id);
+
+            if (!$user) {
+                return $this->response->setJSON(['status' => 'error', 'message' => 'User tidak ditemukan.']);
+            }
+
+            $newRole = $this->request->getPost('role');
+
+            if (!in_array($newRole, ['admin', 'user'])) {
+                return $this->response->setJSON(['status' => 'error', 'message' => 'Role tidak valid.']);
+            }
+
+            // Mencegah admin mengubah role-nya sendiri menjadi non-admin
+            if (session()->get('user')['id'] == $id && $newRole !== 'admin') {
+                return $this->response->setJSON(['status' => 'error', 'message' => 'Anda tidak bisa mengubah role Anda sendiri.']);
+            }
+
+            if ($user['role'] === $newRole) { // Jika role tidak berubah
+                return $this->response->setJSON(['status' => 'success', 'message' => 'Role user tidak berubah.']);
+            }
+
+            if ($this->userModel->update($id, ['role' => $newRole])) {
+                return $this->response->setJSON(['status' => 'success', 'message' => 'Role user berhasil diperbarui!']);
+            } else {
+                return $this->response->setJSON(['status' => 'error', 'message' => 'Gagal memperbarui role user.']);
+            }
+        }
+        return $this->response->setStatusCode(405)->setJSON(['status' => 'error', 'message' => 'Metode tidak diizinkan.']);
+    }
+
+    // Menghapus user (memproses POST dari form HTML)
+    public function deleteUser($id)
+    {
+        if ($this->request->getMethod() === 'POST') { // PASTIKAN 'POST'
+            // Mencegah admin menghapus dirinya sendiri
+            if (session()->get('user')['id'] == $id) {
+                return redirect()->to(base_url('admin/users'))->with('error', 'Anda tidak bisa menghapus akun Anda sendiri.');
+            }
+
+            if ($this->userModel->delete($id)) {
+                return redirect()->to(base_url('admin/users'))->with('success', 'User berhasil dihapus!');
+            } else {
+                return redirect()->to(base_url('admin/users'))->with('error', 'Gagal menghapus user.');
+            }
+        }
+        return redirect()->to(base_url('admin/users'))->with('error', 'Metode penghapusan tidak diizinkan.');
     }
 }

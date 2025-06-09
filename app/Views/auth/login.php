@@ -26,7 +26,6 @@
             <button type="submit" class="login-btn">LogIn</button>
 
             <div class="extra-links">
-                <a href="fPss.html">Forgot Password?</a><br />
                 <span>Don't Have Account? <a href="<?= base_url('register') ?>">Register</a></span>
             </div>
         </form>

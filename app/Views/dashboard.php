@@ -13,7 +13,6 @@
         <div class="logo">Chill<span>Med</span></div>
         <div class="nav-buttons">
             <?php
-            // Cek apakah user sudah login dan role-nya adalah 'admin'
             if (session()->get('isLoggedIn') && session()->get('user')['role'] === 'admin'):
             ?>
                 <a href="<?= base_url('admin') ?>" class="btn-admin">Admin Dashboard</a>
@@ -23,8 +22,7 @@
     </header>
     <section class="hero">
         <div class="quote-top">
-            <p id="quote">"Kamu cukup, bahkan ketika kamu merasa tidak."</p>
-        </div>
+            <p id="quote">"Memuat quote..."</p> </div>
     </section>
 
     <section class="features-section">
@@ -52,7 +50,57 @@
             </div>
         </div>
     </section>
-    <script src="<?= base_url('js/quotes.js') ?>"></script>
+
+    <script>
+        // Menerima data quotes dari PHP (JSON string) dan menggunakannya di JavaScript
+        const quotesData = <?= $quotesJson ?? '[]' ?>;
+
+        let currentQuoteIndex = 0;
+        const quoteElement = document.getElementById("quote");
+
+        // Fallback quotes jika database kosong (sangat disarankan)
+        const fallbackQuotes = [
+            "Kamu cukup, bahkan ketika kamu merasa tidak.",
+            "Satu langkah kecil tetaplah kemajuan.",
+            "Izinkan dirimu beristirahat, bukan menyerah.",
+            "Pikiranmu tidak selamanya benar, terutama saat kamu lelah.",
+            "Hari yang berat bukan berarti hidup yang buruk.",
+            "sebenarnya kau hebat",
+            "semua patut disyukuri",
+            "Bersyukur aja nanti juga dapat yang lebih baik kok."
+        ];
+
+        // Gunakan quotes dari database jika ada, jika tidak, gunakan fallback
+        const displayQuotes = quotesData.length > 0 ? quotesData : fallbackQuotes;
+
+        function displayInitialQuote() {
+            if (displayQuotes.length > 0) {
+                quoteElement.textContent = `"${displayQuotes[currentQuoteIndex]}"`;
+                quoteElement.style.opacity = 1;
+            } else {
+                quoteElement.textContent = `"Tidak ada quote yang tersedia."`;
+                quoteElement.style.opacity = 1;
+            }
+        }
+
+        function changeQuote() {
+            if (displayQuotes.length === 0) return;
+
+            quoteElement.style.opacity = 0; // Fade out
+
+            setTimeout(() => {
+                currentQuoteIndex = (currentQuoteIndex + 1) % displayQuotes.length;
+                quoteElement.textContent = `"${displayQuotes[currentQuoteIndex]}"`;
+                quoteElement.style.opacity = 1; // Fade in
+            }, 1000); // Durasi fade
+        }
+
+        // Tampilkan quote pertama kali saat DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', displayInitialQuote);
+
+        // Ganti quote setiap 5 detik
+        setInterval(changeQuote, 5000);
+    </script>
 </body>
 
 </html>

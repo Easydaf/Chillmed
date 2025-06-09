@@ -1,199 +1,339 @@
+/* public/css/admincss.css */
+
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0;
-  background-color: #d2f0ec;
-  display: flex;
-  /* Untuk layout sidebar dan konten */
-  min-height: 100vh;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: #d2f0ec; /* Warna latar belakang admin */
+    display: flex; /* Menggunakan flexbox untuk layout utama */
+    min-height: 100vh;
 }
 
 .navbar {
-  background-color: #ffffff;
-  padding: 15px 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  height: 40px;
+    background-color: #ffffff;
+    padding: 15px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed; /* Navbar tetap di atas */
+    width: 100%; /* Lebar penuh */
+    box-sizing: border-box; /* Padding termasuk dalam lebar */
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    height: 60px; /* Tinggi navbar */
 }
 
 .navbar .logo {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
 }
 
 .navbar .logo span {
-  color: #00796b;
-  /* Warna khas ChillMed */
+    color: #00796b; /* Warna khas ChillMed */
 }
 
 .navbar .profile {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .navbar .profile span {
-  margin-right: 10px;
-  font-weight: bold;
-  color: #555;
+    margin-right: 10px;
+    font-weight: bold;
+    color: #555;
 }
 
 .navbar .profile img {
-  border-radius: 50%;
-  border: 1px solid #ddd;
+    border-radius: 50%;
+    border: 1px solid #ddd;
 }
 
+/* KARENA TIDAK ADA SIDEBAR, CONTENT AKAN FULL LEBAR */
 .content {
-  /* Offset untuk sidebar */
-  padding: 80px 30px 30px 30px;
-  /* Offset untuk navbar + padding konten */
-  flex-grow: 1;
-  /* Konten mengambil sisa ruang */
+    margin-left: 0; /* Hapus offset sidebar */
+    padding: 80px 30px 30px 30px; /* Offset untuk navbar + padding konten */
+    flex-grow: 1; /* Konten mengambil sisa ruang */
+    width: 100%; /* Memastikan konten mengisi lebar */
+    box-sizing: border-box; /* Padding termasuk dalam lebar */
 }
 
 h1 {
-  color: #00796b;
-  margin-bottom: 25px;
-  font-size: 2em;
+    color: #00796b;
+    margin-bottom: 25px;
+    font-size: 2em;
 }
 
 .alert {
-  padding: 15px;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  font-weight: bold;
-  opacity: 0.9;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    opacity: 0.9;
 }
 
 .alert.success {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
 }
 
 .alert.error {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
 }
 
-/* Card untuk ringkasan di dashboard */
 .summary-cards {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-bottom: 30px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
 }
 
 .summary-card {
-  background-color: #fff;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  text-align: center;
-  flex: 1;
-  min-width: 220px;
-  /* Ukuran minimum agar responsif */
-  transition: transform 0.2s ease;
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    text-align: center;
+    flex: 1;
+    min-width: 220px;
+    transition: transform 0.2s ease;
 }
 
 .summary-card:hover {
-  transform: translateY(-5px);
+    transform: translateY(-5px);
 }
 
 .summary-card h3 {
-  color: #00796b;
-  margin-bottom: 10px;
-  font-size: 1.2em;
+    color: #00796b;
+    margin-bottom: 10px;
+    font-size: 1.2em;
 }
 
 .summary-card p {
-  font-size: 2.5em;
-  font-weight: bold;
-  color: #333;
-  margin: 0;
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
 }
 
 .action-buttons {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
 .action-buttons a {
-  display: inline-block;
-  background-color: #26a69a;
-  color: white;
-  padding: 12px 25px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
-  margin-right: 15px;
-  transition: background-color 0.3s ease;
+    display: inline-block;
+    background-color: #26a69a;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-right: 15px;
+    transition: background-color 0.3s ease;
 }
 
 .action-buttons a:hover {
-  background-color: #00796b;
+    background-color: #00796b;
 }
 
-/* Responsiveness */
-@media (max-width: 768px) {
-  .sidebar {
-    width: 100%;
-    height: auto;
-    position: static;
-    padding-top: 0;
-    box-shadow: none;
-  }
+.item-actions a, .item-actions button {
+    background-color: #26a69a;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.9em;
+    margin-left: 5px;
+    transition: background-color 0.2s ease;
+}
+.item-actions a:hover, .item-actions button:hover {
+    background-color: #00796b;
+}
+.item-actions .btn-edit {
+    background-color: #2196f3;
+}
+.item-actions .btn-edit:hover {
+    background-color: #0b7dda;
+}
+.item-actions .btn-delete {
+    background-color: #f44336;
+}
+.item-actions .btn-delete:hover {
+    background-color: #d32f2f;
+}
 
-  .sidebar a {
-    border-left: none !important;
-    text-align: center;
-    border-bottom: 1px solid #34495e;
-  }
-
-  .content {
-    margin-left: 0;
-    padding-top: 20px;
-  }
-
-  .navbar {
-    position: static;
-    height: auto;
-    flex-direction: column;
-    padding: 10px;
-  }
-
-  .navbar .profile {
-    margin-top: 10px;
-  }
-
-  .summary-cards {
-    flex-direction: column;
-  }
-
-  .summary-card {
-    min-width: unset;
-    width: 100%;
-  }
+.add-button {
+    background-color: #00796b;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-bottom: 20px;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+.add-button:hover {
+    background-color: #005f4f;
 }
 
 .back-button {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    color: #00695c;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: -15px;
+    width: fit-content;
+}
 
-  background: none;
-  border: none;
-  font-size: 1.5rem; /* Ukuran ikon */
-  color: #00695c; /* Warna ikon */
-  cursor: pointer;
-  text-decoration: none; /* Hapus garis bawah default link */
-  padding: 5px; /* Tambahkan padding agar mudah diklik */
-  z-index: 10; /* Pastikan tombol di atas elemen lain */
+.back-button i {
+    margin-right: 8px;
 }
 
 .back-button:hover {
-  color: #004d40; /* Warna hover */
+    color: #004d40;
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* UBAH ATAU PASTIKAN INI ADALAH 'none' */
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+    align-items: center;
+    justify-content: center;
+    /* display: flex; /* Ini hanya aktif saat JS memanggil .fadeIn() */
+}
+.modal-content {
+    background-color: #fefefe;
+    padding: 30px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+}
+.modal-content h3 {
+    margin-top: 0;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.modal-content form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+.modal-content form input[type="text"],
+.modal-content form textarea,
+.modal-content form select {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+.modal-actions {
+    text-align: right;
+    margin-top: 20px;
+}
+.btn-submit {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+.btn-submit:hover {
+    background-color: #45a049;
+}
+.btn-cancel {
+    background-color: #9e9e9e;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    text-decoration: none;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+}
+.btn-cancel:hover {
+    background-color: #757575;
+}
+
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    font-size: 0.95em;
+}
+.data-table th, .data-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+.data-table th {
+    background-color: #00796b;
+    color: white;
+    font-weight: bold;
+}
+.data-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+.data-table .article-image-thumb {
+    max-width: 80px;
+    max-height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+    .content {
+        margin-left: 0;
+        padding-top: 20px;
+    }
+    .navbar {
+        position: static;
+        height: auto;
+        flex-direction: column;
+        padding: 10px;
+    }
+    .navbar .profile {
+        margin-top: 10px;
+    }
+    .summary-cards {
+        flex-direction: column;
+    }
+    .summary-card {
+        min-width: unset;
+        width: 100%;
+    }
 }

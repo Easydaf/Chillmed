@@ -5,7 +5,7 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'AuthController::login'); // halaman login utama
+$routes->get('/', 'AuthController::login');
 $routes->get('register', 'AuthController::register');
 $routes->post('register', 'AuthController::attemptRegister');
 
@@ -17,30 +17,38 @@ $routes->post('/chatbot/message', 'ChatbotController::message');
 
 // Rute untuk menampilkan daftar pertanyaan dan form pertanyaan spesifik
 $routes->get('/questions', 'Questions::index');
-$routes->get('/questions/(:segment)', 'Questions::show/$1'); // Menampilkan form kuesioner (e.g., /questions/anxiety)
-$routes->post('/questions/(:segment)', 'Questions::submit/$1'); // Memproses submit form kuesioner (e.g., /questions/anxiety POST)
+$routes->get('/questions/(:segment)', 'Questions::show/$1');
+$routes->post('/questions/(:segment)', 'Questions::submit/$1');
 
 // Rute untuk menampilkan hasil kuesioner
-// Rute ini akan mengarahkan ke HasilController::index() dengan kategori sebagai parameter
-$routes->get('/hasil/(:segment)', 'Hasil::index/$1'); // <-- TAMBAHKAN ATAU BETULKAN RUTE INI
+$routes->get('/hasil/(:segment)', 'Hasil::index/$1');
 
-// HAPUS RUTE INI JIKA
 $routes->get('dashboard', 'DashboardController::index', ['filter' => 'auth']);
 
+// Rute untuk Halaman Admin (membutuhkan autentikasi DAN role admin)
 $routes->group('admin', ['filter' => 'adminAuth'], static function ($routes) {
-    $routes->get('/', 'AdminController::index'); // Dashboard Admin
 
+    // --- Rute POST/MATCH (CRUD) - Paling atas dan spesifik ---
     // Manajemen Quotes
-    $routes->get('quotes', 'AdminController::quotes'); // Tampilkan daftar quotes
-    $routes->post('quotes/add', 'AdminController::addQuote'); // Tambah quote (via AJAX)
-    $routes->post('quotes/edit/(:num)', 'AdminController::editQuote/$1'); // Edit quote (via AJAX)
-    $routes->post('quotes/delete/(:num)', 'AdminController::deleteQuote/$1'); // Hapus quote (via AJAX)
+    $routes->match(['GET', 'POST'], 'quotes/add', 'AdminController::addQuote'); // UBAH INI
+    $routes->post('quotes/edit/(:num)', 'AdminController::editQuote/$1');
+    $routes->post('quotes/delete/(:num)', 'AdminController::deleteQuote/$1');
 
     // Manajemen Artikel
+    $routes->match(['GET', 'POST'], 'articles/add', 'AdminController::addArticle');
+    $routes->match(['GET', 'POST'], 'articles/edit/(:num)', 'AdminController::editArticle/$1');
+    $routes->post('articles/delete/(:num)', 'AdminController::deleteArticle/$1');
+
+    // Manajemen Users
+    $routes->post('users/edit-role/(:num)', 'AdminController::editUserRole/$1'); // AJAX POST untuk edit role
+    $routes->post('users/delete/(:num)', 'AdminController::deleteUser/$1'); // POST dari form HTML untuk hapus
+    $routes->get('users', 'AdminController::users'); // GET untuk menampilkan daftar user
+
+    // --- Rute GET (Untuk menampilkan halaman) - Setelah rute POST/MATCH ---
+    $routes->get('/', 'AdminController::index'); // Dashboard Admin
+    $routes->get('quotes', 'AdminController::quotes'); // Tampilkan daftar quotes
     $routes->get('articles', 'AdminController::articles'); // Tampilkan daftar artikel
-    $routes->match(['get', 'post'], 'articles/add', 'AdminController::addArticle'); // Tambah artikel (GET untuk form, POST untuk submit)
-    $routes->match(['get', 'post'], 'articles/edit/(:num)', 'AdminController::editArticle/$1'); // Edit artikel (GET untuk form, POST untuk submit)
-    $routes->post('articles/delete/(:num)', 'AdminController::deleteArticle/$1'); // Hapus artikel (via AJAX)
+    $routes->get('users', 'AdminController::users'); // Tampilkan daftar user
 });
 
 $routes->get('/artikel', 'Artikel::home');

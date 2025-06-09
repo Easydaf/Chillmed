@@ -46,6 +46,7 @@
         <div class="action-buttons">
             <a href="<?= base_url('admin/quotes') ?>">Kelola Quotes</a>
             <a href="<?= base_url('admin/articles') ?>">Kelola Artikel</a>
+            <a href="<?= base_url('admin/users') ?>">Kelola User</a>
         </div>
     </div>
 </body>

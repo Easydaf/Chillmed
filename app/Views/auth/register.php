@@ -10,7 +10,7 @@
 
 <body>
     <div class="signup-container">
-        <form class="form-box" action="<?= base_url('register') ?>" method="post">
+        <form class="form-box" action="<?= base_url('register') ?>" method="post"><?= csrf_field() ?> 
             <h2>Register</h2>
 
             <label for="name" class="form-label">Full Name</label>

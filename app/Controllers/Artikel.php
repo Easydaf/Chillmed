@@ -24,7 +24,7 @@ class Artikel extends BaseController
             'title' => 'Kuliah Kok Capek Terus? Kenali Tanda-Tanda Burnout Sebelum Terlambat',
             'image' => 'burnout.jpg',
             'date' => '20/05/2025, 14:00 WITA',
-            'content' => 'BANJARMASIN, ChillMed.com – Kamu merasa capek terus meskipun tidak sedang banyak tugas? Semangat belajar hilang, mudah marah, atau merasa semua jadi beban? Bisa jadi kamu sedang mengalami burnout. Burnout adalah kondisi kelelahan fisik, emosional, dan mental yang disebabkan oleh stres berkepanjangan, terutama ketika seseorang merasa kewalahan, terlalu banyak tuntutan, dan tidak memiliki cukup waktu atau energi untuk menghadapinya. Walaupun sering dikaitkan dengan dunia kerja, burnout juga sangat umum terjadi pada mahasiswa.
+            'content' => 'BANJARMASIN, ChillMed.com  Kamu merasa capek terus meskipun tidak sedang banyak tugas? Semangat belajar hilang, mudah marah, atau merasa semua jadi beban? Bisa jadi kamu sedang mengalami burnout. Burnout adalah kondisi kelelahan fisik, emosional, dan mental yang disebabkan oleh stres berkepanjangan, terutama ketika seseorang merasa kewalahan, terlalu banyak tuntutan, dan tidak memiliki cukup waktu atau energi untuk menghadapinya. Walaupun sering dikaitkan dengan dunia kerja, burnout juga sangat umum terjadi pada mahasiswa.
 
             Burnout berbeda dengan malas. Malas biasanya terjadi sesekali dan bisa hilang dengan motivasi atau dorongan kecil. Burnout bukan sekadar malas: ia melibatkan kelelahan yang dalam dan terus-menerus, bahkan untuk hal-hal yang dulu kamu sukai dan kuasai.'
         ],
@@ -48,6 +48,11 @@ class Artikel extends BaseController
         ],
     ];
 
+    public function __construct()
+    {
+        helper('url');
+    }
+
     public function home()
     {
         $data = [
@@ -59,26 +64,35 @@ class Artikel extends BaseController
 
     public function detail($title_slug = null)
     {
-
         if ($title_slug === null) {
             return redirect()->to(base_url('artikel'));
         }
 
         $selectedArticle = null;
         foreach ($this->allArticles as $article) {
-
             if (url_title($article['title'], '-', TRUE) === $title_slug) {
                 $selectedArticle = $article;
                 break;
             }
         }
-        if ($selectedArticle === null) {
 
+        if ($selectedArticle === null) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
+
+        $relatedArticles = [];
+        $countRelated = 0;
+        foreach ($this->allArticles as $article) {
+            if ($article['title'] !== $selectedArticle['title']) {
+                $relatedArticles[] = $article;
+                $countRelated++;
+                if ($countRelated >= 5) break;
+            }
+        }
+
         $data = [
             'article' => $selectedArticle,
-            'relatedArticles' => $this->allArticles,
+            'relatedArticles' => $relatedArticles,
             'pageTitle' => $selectedArticle['title']
         ];
         return view('layout/artikel/artikeldetail', $data);

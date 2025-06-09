@@ -1,0 +1,156 @@
+/* public/css/manage_users.css */
+
+/* Gaya untuk tabel */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    font-size: 0.95em;
+    border-radius: 8px; /* Sudut membulat untuk tabel */
+    overflow: hidden; /* Memastikan sudut membulat terlihat */
+}
+
+.data-table th, .data-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.data-table th {
+    background-color: #00796b; /* Warna header tabel sesuai tema ChillMed */
+    color: white;
+    font-weight: bold;
+}
+
+.data-table tr:nth-child(even) {
+    background-color: #f2f2f2; /* Warna latar belakang selang-seling */
+}
+
+/* Gaya untuk dropdown role */
+.role-select {
+    padding: 5px 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 0.9em;
+    cursor: pointer;
+    background-color: #e9f5f2; /* Latar belakang dropdown sesuai tema */
+    color: #333;
+    transition: all 0.2s ease;
+}
+
+.role-select:focus {
+    outline: none;
+    border-color: #00796b;
+    box-shadow: 0 0 0 2px rgba(0, 121, 107, 0.2);
+}
+
+/* Gaya untuk tombol aksi (Edit/Hapus) */
+.item-actions a, .item-actions button {
+    background-color: #f44336; /* Warna merah untuk delete */
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease;
+    margin-left: 5px; /* Jarak antar tombol */
+}
+
+.item-actions a:hover, .item-actions button:hover {
+    background-color: #d32f2f; /* Warna hover delete */
+}
+
+/* Tombol Edit di sini akan sama dengan tombol delete karena hanya ada 1 aksi utama per baris user */
+/* Jika Anda ingin tombol edit terpisah (misalnya untuk mengedit profil lengkap, bukan hanya role),
+   maka gaya ini bisa disesuaikan atau dihapus jika edit hanya via dropdown */
+/* Contoh gaya untuk tombol edit terpisah (jika ada):
+.item-actions .btn-edit-user {
+    background-color: #2196f3;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease;
+    margin-right: 5px;
+}
+.item-actions .btn-edit-user:hover {
+    background-color: #0b7dda;
+}
+*/
+
+/* Pesan "Belum ada user" */
+.no-data-message {
+    text-align: center;
+    color: #666;
+    margin-top: 30px;
+    font-style: italic;
+    font-size: 1.1em;
+}
+
+/* Perbaikan alignment untuk konten table jika tidak ada sidebar (dari admincss.css) */
+.content {
+    margin-left: 0;
+    padding: 80px 30px 30px 30px;
+    flex-grow: 1;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Responsiveness untuk tabel */
+@media (max-width: 768px) {
+    .data-table, .data-table tbody, .data-table thead, .data-table tr, .data-table th, .data-table td {
+        display: block; /* Membuat tabel responsif */
+    }
+
+    .data-table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .data-table tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .data-table td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+    }
+
+    .data-table td:last-child {
+        border-bottom: none;
+    }
+
+    .data-table td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 45%;
+        padding-left: 15px;
+        font-weight: bold;
+        text-align: left;
+        color: #555;
+    }
+
+    .item-actions {
+        text-align: right;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-top: 1px solid #eee;
+        display: block;
+    }
+}
