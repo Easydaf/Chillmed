@@ -51,8 +51,6 @@ $(document).ready(function() {
         });
     });
 
-    // Fungsi escapeHtml (mungkin tidak lagi diperlukan di JS ini jika tidak ada dynamic HTML yang kompleks)
-    // Tapi tetap disertakan jika Anda punya elemen lain yang membutuhkannya.
     window.escapeHtml = function(text) {
         const map = {
             '&': '&amp;',

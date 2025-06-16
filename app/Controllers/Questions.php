@@ -55,12 +55,5 @@ class Questions extends BaseController
         // ------------------------------------------------------------------
     }
 
-    // Metode analyzeScore TIDAK DIGUNAKAN DI SINI jika hasil di Pisah ke HasilController
-    // Metode ini hanya dibutuhkan jika Anda ingin menampilkan hasil langsung di QuestionsController
-    // Anda bisa menghapus metode ini dari Questions.php atau biarkan saja jika tidak dipanggil
-    // private function analyzeScore($kategori, $score)
-    // {
-    //     // ... logika analyzeScore (akan ada di HasilController) ...
-    // }
 }
     

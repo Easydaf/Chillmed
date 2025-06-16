@@ -37,7 +37,7 @@ class AdminController extends BaseController
     }
 
     // --- Manajemen Quotes ---
-    public function quotes()
+     public function quotes()
     {
         $data = [
             'pageTitle' => 'Manajemen Quotes',
@@ -46,12 +46,10 @@ class AdminController extends BaseController
         return view('admin/manage_quotes', $data);
     }
 
-    // UBAH FUNGSI addQuote INI
+    // FUNGSI addQuote (untuk Tampilan Form & Pemrosesan POST)
     public function addQuote()
     {
-        // PERBAIKAN: Ubah 'post' menjadi 'POST' (huruf kapital)
         if ($this->request->getMethod() === 'POST') {
-            // Logika pemrosesan form submit (POST)
             $validation = \Config\Services::validation();
             $rules = [
                 'quote_text' => 'required|min_length[5]|max_length[500]',
@@ -71,46 +69,60 @@ class AdminController extends BaseController
                     return redirect()->back()->withInput()->with('error', 'Gagal menambahkan quote.');
                 }
             } else {
-                // Validasi gagal, kembali ke form dengan input dan error
                 return redirect()->back()->withInput()->with('errors', $validation->getErrors());
             }
         }
-        // Menampilkan form tambah quote (GET)
         return view('admin/quotes_add', ['pageTitle' => 'Tambah Quote Baru']);
     }
 
-    // Metode untuk Edit Quote (Masih AJAX)
+    // UBAH FUNGSI editQuote (Sekarang untuk Tampilan Form & Pemrosesan POST)
     public function editQuote($id)
     {
-        // PERBAIKAN: Ubah 'post' menjadi 'POST' (huruf kapital)
-        if ($this->request->isAJAX() && $this->request->getMethod() === 'POST') {
-            $data = [
-                'quote_text' => $this->request->getPost('quote_text'),
-                'author'     => $this->request->getPost('author'),
-            ];
+        $quote = $this->quoteModel->find($id);
 
-            if ($this->quoteModel->update($id, $data)) {
-                return $this->response->setJSON(['status' => 'success', 'message' => 'Quote berhasil diperbarui!']);
+        if (!$quote) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+
+        if ($this->request->getMethod() === 'POST') {
+            $validation = \Config\Services::validation();
+            $rules = [
+                'quote_text' => 'required|min_length[5]|max_length[500]',
+                'author'     => 'permit_empty|max_length[100]',
+            ];
+            $validation->setRules($rules);
+
+            if ($validation->withRequest($this->request)->run()) {
+                $data = [
+                    'quote_text' => $this->request->getPost('quote_text'),
+                    'author'     => $this->request->getPost('author'),
+                ];
+
+                if ($this->quoteModel->update($id, $data)) {
+                    return redirect()->to(base_url('admin/quotes'))->with('success', 'Quote berhasil diperbarui!');
+                } else {
+                    return redirect()->back()->withInput()->with('error', 'Gagal memperbarui quote.');
+                }
             } else {
-                return $this->response->setJSON(['status' => 'error', 'message' => 'Gagal memperbarui quote atau tidak ada perubahan.']);
+                return redirect()->back()->withInput()->with('errors', $validation->getErrors());
             }
         }
-        return $this->response->setStatusCode(405)->setJSON(['status' => 'error', 'message' => 'Metode tidak diizinkan.']);
+        return view('admin/quotes_edit', ['pageTitle' => 'Edit Quote', 'quote' => $quote]);
     }
 
-    // Metode untuk Delete Quote (Masih AJAX)
+    // FUNGSI deleteQuote (untuk Pemrosesan POST)
     public function deleteQuote($id)
     {
-        // PERBAIKAN: Ubah 'post' menjadi 'POST' (huruf kapital)
-        if ($this->request->isAJAX() && $this->request->getMethod() === 'POST') {
+        if ($this->request->getMethod() === 'POST') {
             if ($this->quoteModel->delete($id)) {
-                return $this->response->setJSON(['status' => 'success', 'message' => 'Quote berhasil dihapus!']);
+                return redirect()->to(base_url('admin/quotes'))->with('success', 'Quote berhasil dihapus!');
             } else {
-                return $this->response->setJSON(['status' => 'error', 'message' => 'Gagal menghapus quote.']);
+                return redirect()->to(base_url('admin/quotes'))->with('error', 'Gagal menghapus quote.');
             }
         }
-        return $this->response->setStatusCode(405)->setJSON(['status' => 'error', 'message' => 'Metode tidak diizinkan.']);
+        return redirect()->to(base_url('admin/quotes'))->with('error', 'Metode penghapusan tidak diizinkan.');
     }
+
 
     // --- Manajemen Artikel ---
     public function articles()
