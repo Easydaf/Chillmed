@@ -12,6 +12,14 @@ $routes->post('register', 'AuthController::attemptRegister');
 $routes->post('login', 'AuthController::attemptLogin');
 $routes->get('logout', 'AuthController::logout');
 
+$routes->get('forgot-password', 'AuthController::forgotPassword');
+$routes->post('forgot-password', 'AuthController::forgotPassword');
+
+// TAMBAH RUTE UNTUK RESET PASSWORD INI
+$routes->get('reset-password', 'AuthController::resetPassword'); // Untuk menampilkan form reset
+$routes->post('reset-password', 'AuthController::resetPassword'); // Untuk memproses password baru
+
+
 $routes->get('/chatbot', 'ChatbotController::index');
 $routes->post('/chatbot/message', 'ChatbotController::message');
 
@@ -31,7 +39,7 @@ $routes->group('admin', ['filter' => 'adminAuth'], static function ($routes) {
     // --- Rute POST/MATCH (CRUD) - Paling atas dan spesifik ---
     // Manajemen Quotes
     $routes->match(['GET', 'POST'], 'quotes/add', 'AdminController::addQuote');
-    $routes->match(['GET', 'POST'], 'quotes/edit/(:num)', 'AdminController::editQuote/$1'); // Ubah dari post() menjadi match(['GET','POST'])
+    $routes->match(['GET', 'POST'], 'quotes/edit/(:num)', 'AdminController::editQuote/$1');
     $routes->post('quotes/delete/(:num)', 'AdminController::deleteQuote/$1');
 
     // Manajemen Artikel
@@ -44,10 +52,10 @@ $routes->group('admin', ['filter' => 'adminAuth'], static function ($routes) {
     $routes->post('users/delete/(:num)', 'AdminController::deleteUser/$1');
 
     // --- Rute GET (Untuk menampilkan halaman) - Setelah rute POST/MATCH ---
-    $routes->get('/', 'AdminController::index'); // Dashboard Admin
-    $routes->get('quotes', 'AdminController::quotes'); // Tampilkan daftar quotes
-    $routes->get('articles', 'AdminController::articles'); // Tampilkan daftar artikel
-    $routes->get('users', 'AdminController::users'); // Tampilkan daftar user
+    $routes->get('/', 'AdminController::index');
+    $routes->get('quotes', 'AdminController::quotes');
+    $routes->get('articles', 'AdminController::articles');
+    $routes->get('users', 'AdminController::users');
 });
 
 $routes->get('/artikel', 'Artikel::home');

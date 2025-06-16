@@ -32,7 +32,8 @@
             <button type="submit" class="login-btn">Login</button>
 
             <div class="extra-links">
-                <span>Don't Have Account? <a href="<?= base_url('register') ?>">Register</a></span>
+                <span>Don't Have Account? <a href="<?= base_url('register') ?>">Register</a></span> <br>
+                <span>Forgot Password? <a href="<?= base_url('forgot-password') ?>" style="text-decoration: none; color: #00725e; font-weight: bold;">Lupa Password?</a></span>
             </div>
         </form>
     </div>

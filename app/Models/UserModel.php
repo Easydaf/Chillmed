@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use CodeIgniter\Model;
@@ -9,11 +8,11 @@ class UserModel extends Model
     protected $table      = 'users';
     protected $primaryKey = 'id';
 
-    protected $allowedFields = ['name', 'email', 'password', 'role'];
+    // TAMBAH 'reset_token' dan 'reset_expires_at' ke allowedFields
+    protected $allowedFields = ['name', 'email', 'password', 'role', 'reset_token', 'reset_expires_at'];
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
-    // PERBAIKAN PENTING DI BAWAH INI
-    protected $updatedField  = 'updated_at'; // Pastikan ini 'updated_at', bukan string kosong!
+    protected $updatedField  = 'updated_at';
 
     // Validation (optional, but good practice)
     protected $validationRules = [
@@ -21,6 +20,7 @@ class UserModel extends Model
         'email'    => 'required|valid_email|is_unique[users.email,id,{id}]',
         'password' => 'required|min_length[8]',
         'role'     => 'required|in_list[admin,user]',
+        // Anda bisa menambahkan validasi untuk reset_token jika diperlukan, tapi tidak wajib untuk saat ini
     ];
     protected $validationMessages = [];
     protected $skipValidation = false;
