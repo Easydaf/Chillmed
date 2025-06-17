@@ -11,20 +11,22 @@ class QuoteModel extends Model
 
     protected $useAutoIncrement = true;
     protected $returnType     = 'array';
-    protected $useSoftDeletes = false; // Tidak menggunakan soft delete
+    protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['quote_text', 'author']; // Kolom yang bisa diisi
+    // TAMBAH 'user_id' ke allowedFields
+    protected $allowedFields = ['user_id', 'quote_text', 'author'];
 
     // Dates
-    protected $useTimestamps = true; // Menggunakan created_at dan updated_at
+    protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
 
     // Validation
     protected $validationRules = [
-        'quote_text' => 'required|min_length[5]|max_length[500]', // Validasi teks quote
-        'author'     => 'permit_empty|max_length[100]',            // Penulis opsional
+        'user_id'    => 'required|is_natural_no_zero', // Pastikan user_id ada dan positif
+        'quote_text' => 'required|min_length[5]|max_length[500]',
+        'author'     => 'permit_empty|max_length[100]',
     ];
     protected $validationMessages = [];
     protected $skipValidation = false;

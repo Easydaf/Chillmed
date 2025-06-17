@@ -15,7 +15,7 @@
         <nav>
             <a href="<?= base_url('dashboard') ?>">Beranda</a>
             <a href="<?= base_url('chatbot') ?>">Chatbot</a>
-            <a href="<?= base_url('artikel') ?>">Artikel</a> <a href="<?= base_url('questions') ?>">Pertanyaan</a> <a href="<?= base_url('/') ?>"><button class="btn logout">Logout</button></a>
+            <a href="<?= base_url('questions') ?>">Pertanyaan</a> <a href="<?= base_url('/') ?>"><button class="btn logout">Logout</button></a>
         </nav>
     </header>
 

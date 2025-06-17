@@ -49,9 +49,6 @@
                 <label for="title">Judul Artikel:</label>
                 <input type="text" id="title" name="title" value="<?= old('title') ?>" required>
 
-                <label for="author">Penulis (Opsional):</label>
-                <input type="text" id="author" name="author" value="<?= old('author') ?>">
-
                 <label for="image">Gambar Artikel:</label>
                 <input type="file" id="image" name="image" accept="image/*">
                 <small>Max 1MB, format: JPG, JPEG, PNG, GIF</small>

@@ -11,7 +11,7 @@
 <body>
 
     <header class="navbar">
-        <div class="logo"><span class="chill">Chill</span><span class="med">Med</span></div>
+        <div class="logo"><strong>Chill</strong><span class="med">Med</span></div>
         <nav>
             <a href="<?= base_url('dashboard') ?>">Beranda</a>
             <a href="<?= base_url('chatbot') ?>">Chatbot</a>

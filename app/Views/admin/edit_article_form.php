@@ -50,9 +50,6 @@
                     <label for="title">Judul Artikel:</label>
                     <input type="text" id="title" name="title" value="<?= old('title', $article['title']) ?>" required>
 
-                    <label for="author">Penulis (Opsional):</label>
-                    <input type="text" id="author" name="author" value="<?= old('author', $article['author']) ?>">
-
                     <label>Gambar Artikel Saat Ini:</label>
                     <?php if ($article['image']): ?>
                         <img src="<?= base_url('images/' . esc($article['image'])) ?>" alt="Gambar Artikel" class="current-image">
