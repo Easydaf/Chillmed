@@ -4,7 +4,7 @@ $(document).ready(function () {
     });
 
     $('#user-input').on('keypress', function (e) {
-        if (e.which === 13) { // Enter key
+        if (e.which === 13) { 
             sendMessage();
         }
     });

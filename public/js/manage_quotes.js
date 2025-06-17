@@ -1,20 +1,18 @@
-// public/js/manage_quotes.js
-
 $(document).ready(function() {
-    // Pastikan baseUrl ini dideklarasikan di HTML sebelum script ini dimuat
+    
     const baseUrl = (typeof window.baseUrl !== 'undefined') ? window.baseUrl : 'http://localhost:8080/';
 
-    // Ambil CSRF Token dan Name dari meta tag
+    
     const csrfName = $('meta[name="csrf-name"]').attr('content') || '';
     let csrfHash = $('meta[name="csrf-token"]').attr('content') || '';
 
-    // Perbarui CSRF Token di setiap request sukses
+    
     $(document).ajaxComplete(function(event, xhr, settings) {
         if (settings.type === 'POST' || settings.type === 'post') {
             const newToken = xhr.getResponseHeader('X-CSRF-TOKEN');
             if (newToken && newToken !== csrfHash) {
                 csrfHash = newToken;
-                $('meta[name="csrf-token"]').attr('content', newToken); // Update meta tag di DOM
+                $('meta[name="csrf-token"]').attr('content', newToken); 
             } else {
                 const currentMetaToken = $('meta[name="csrf-token"]').attr('content');
                 if (currentMetaToken && currentMetaToken !== csrfHash) {
@@ -24,10 +22,10 @@ $(document).ready(function() {
         }
     });
 
-    // Fungsi untuk menampilkan/menyembunyikan modal edit
-    window.showEditQuoteModal = function(id, jsonText, jsonAuthor) { // Terima sebagai string JSON
-        const text = JSON.parse(jsonText);   // Parse string JSON menjadi string JS murni
-        const author = JSON.parse(jsonAuthor); // Parse string JSON menjadi string JS murni
+    
+    window.showEditQuoteModal = function(id, jsonText, jsonAuthor) { 
+        const text = JSON.parse(jsonText);   
+        const author = JSON.parse(jsonAuthor); 
 
         $('#edit_quote_id').val(id);
         $('#edit_quote_text').val(text);
@@ -39,7 +37,7 @@ $(document).ready(function() {
         $('#editQuoteForm')[0].reset();
     }
 
-    // Handle submit form edit quote
+    
     $('#editQuoteForm').on('submit', function(e) {
         e.preventDefault();
         const quoteId = $('#edit_quote_id').val();
@@ -59,38 +57,37 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(response) {
                 if (response.status === 'success') {
-                    // UBAH INI: Gunakan SweetAlert untuk sukses
+                    
                     Swal.fire({
                         icon: 'success',
                         title: 'Berhasil!',
                         text: response.message,
                         showConfirmButton: false,
                         timer: 2000
-                    }).then(() => { // Callback setelah SweetAlert hilang
-                        console.log("SweetAlert closed, attempting DOM update for quote ID:", quoteId); // DEBUG LOG
-                        // Perbarui DOM (HTML) secara dinamis di sini
+                    }).then(() => { 
+                        console.log("SweetAlert closed, attempting DOM update for quote ID:", quoteId); 
+                       
                         const updatedText = $('#edit_quote_text').val();
                         const updatedAuthor = $('#edit_author').val() || 'Anonim';
                         
-                        // Perbarui teks di elemen <strong> dan <span> yang relevan
+                       
                         const $quoteItem = $(`#quote-item-${quoteId}`);
-                        console.log("Quote item element found:", $quoteItem.length > 0 ? true : false, $quoteItem); // DEBUG LOG
+                        console.log("Quote item element found:", $quoteItem.length > 0 ? true : false, $quoteItem); 
                         
                         $($quoteItem).find('strong').text(`"${updatedText}"`);
                         $($quoteItem).find('span').text(`- ${updatedAuthor} (ID: ${quoteId})`);
                         
-                        // PERBAIKAN PENTING: Update juga atribut onclick pada tombol edit
-                        // agar data yang di-load ke modal di kemudian hari adalah versi terbaru.
+                        
                         const escapedJsonUpdatedText = window.escapeHtml(JSON.stringify(updatedText));
                         const escapedJsonUpdatedAuthor = window.escapeHtml(JSON.stringify($('#edit_author').val() || ''));
                         $($quoteItem).find('.btn-edit').attr('onclick', `showEditQuoteModal(${quoteId}, '${escapedJsonUpdatedText}', '${escapedJsonUpdatedAuthor}')`);
-                        console.log("DOM updated for quote ID:", quoteId); // DEBUG LOG
+                        console.log("DOM updated for quote ID:", quoteId); 
                     });
                     
-                    window.hideEditQuoteModal(); // Sembunyikan modal segera setelah AJAX sukses
+                    window.hideEditQuoteModal(); 
 
                 } else {
-                    // Gunakan SweetAlert untuk gagal
+                   
                     Swal.fire({
                         icon: 'error',
                         title: 'Gagal!',
@@ -126,17 +123,17 @@ $(document).ready(function() {
         });
     });
 
-    // Handle delete quote (Sudah menggunakan SweetAlert sebelumnya, tidak perlu perubahan)
+    
     $('.btn-delete').on('click', function() {
         const quoteId = $(this).data('quote-id');
-        const quoteText = $(this).data('quote-text'); // Ambil teks quote untuk konfirmasi
+        const quoteText = $(this).data('quote-text'); 
 
         Swal.fire({
             title: 'Konfirmasi Penghapusan',
             text: `Anda yakin ingin menghapus quote "${quoteText}" (ID: ${quoteId})? Aksi ini tidak dapat dibatalkan!`,
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#d33', // Warna merah untuk hapus
+            confirmButtonColor: '#d33', 
             cancelButtonColor: '#3085d6',
             confirmButtonText: 'Ya, Hapus!',
             cancelButtonText: 'Batal'
@@ -163,7 +160,7 @@ $(document).ready(function() {
                                 response.message,
                                 'success'
                             ).then(() => {
-                                $('#quote-item-' + quoteId).remove(); // Hapus elemen dari DOM
+                                $('#quote-item-' + quoteId).remove(); 
                                 if ($('#quotes-list .data-item').length === 0) {
                                     $('#quotes-list').append('<p>Belum ada quotes di database.</p>');
                                 }
@@ -202,7 +199,6 @@ $(document).ready(function() {
         });
     });
 
-    // Fungsi helper untuk menghindari masalah quote di HTML attribute (tampilan)
     window.escapeHtml = function(text) {
         const map = {
             '&': '&amp;',
@@ -214,7 +210,6 @@ $(document).ready(function() {
         return text.replace(/[&<>"']/g, function(m) { return map[m]; });
     }
 
-    // Tutup modal saat klik di luar area konten modal
     $(window).on('click', function(event) {
         if ($(event.target).is('.modal')) {
             window.hideEditQuoteModal();

@@ -1,19 +1,17 @@
-// public/js/manage_users.js
-
 $(document).ready(function() {
     const baseUrl = (typeof window.baseUrl !== 'undefined') ? window.baseUrl : 'http://localhost:8080/';
 
-    // Ambil CSRF Token dan Name dari meta tag
+    
     const csrfName = $('meta[name="csrf-name"]').attr('content') || '';
     let csrfHash = $('meta[name="csrf-token"]').attr('content') || '';
 
-    // Perbarui CSRF Token di setiap request sukses
+    
     $(document).ajaxComplete(function(event, xhr, settings) {
         if (settings.type === 'POST' || settings.type === 'post') {
             const newToken = xhr.getResponseHeader('X-CSRF-TOKEN');
             if (newToken && newToken !== csrfHash) {
                 csrfHash = newToken;
-                $('meta[name="csrf-token"]').attr('content', newToken); // Update meta tag di DOM
+                $('meta[name="csrf-token"]').attr('content', newToken); 
             } else {
                 const currentMetaToken = $('meta[name="csrf-token"]').attr('content');
                 if (currentMetaToken && currentMetaToken !== csrfHash) {
@@ -23,15 +21,15 @@ $(document).ready(function() {
         }
     });
 
-    // Handle perubahan dropdown role
+    
     $('.role-select').on('change', function() {
         const userId = $(this).data('user-id');
         const newRole = $(this).val();
         const userName = $(`#user-item-${userId} td[data-label="Nama"]`).text();
 
-        // Simpan role saat ini untuk kemungkinan rollback jika konfirmasi dibatalkan
-        const currentRole = $(this).data('current-role'); // Ambil dari data attribute, bukan dari .val()
-        $(this).data('current-role', newRole); // Update data-attribute for next change
+        
+        const currentRole = $(this).data('current-role'); 
+        $(this).data('current-role', newRole); 
 
         Swal.fire({
             title: 'Konfirmasi Perubahan Role',
@@ -66,7 +64,7 @@ $(document).ready(function() {
                                 response.message,
                                 'success'
                             );
-                            // Update data-current-role di dropdown setelah sukses
+                            
                             $(`.role-select[data-user-id="${userId}"]`).data('current-role', newRole);
                         } else {
                             Swal.fire(
@@ -74,7 +72,7 @@ $(document).ready(function() {
                                 response.message,
                                 'error'
                             );
-                            // Rollback dropdown jika gagal
+                            
                             $(`.role-select[data-user-id="${userId}"]`).val(currentRole);
                         }
                     },
@@ -96,12 +94,12 @@ $(document).ready(function() {
                             'error'
                         );
                         console.error('AJAX Error:', xhr.status, xhr.statusText, xhr.responseText);
-                        // Rollback dropdown jika ada error AJAX
+                        
                         $(`.role-select[data-user-id="${userId}"]`).val(currentRole);
                     }
                 });
             } else {
-                // Jika user membatalkan, kembalikan pilihan dropdown ke nilai semula
+                
                 $(this).val(currentRole);
             }
         });

@@ -1,6 +1,3 @@
-/* public/css/artikel.css */
-
-/* CSS dari artikelhome.php */
 * {
   margin: 0;
   padding: 0;
@@ -17,13 +14,14 @@ body {
   font-size: 1.5rem;
   font-weight: bold;
   color: #0b0f0e;
-  margin: 0; /* Hapus margin default h2 */
-  flex-grow: 1; /* Biarkan judul mengambil ruang sisa untuk membantu pemusatan */
+  margin: 0; 
+  flex-grow: 1; 
   font-family: "Segoe UI", sans-serif;
 }
 
-.logo strong {
-  color: #00a99d;
+.logo span {
+  color: #00796b;
+  font-family: "Segoe UI", sans-serif;
 }
 
 .logo .med {
@@ -123,9 +121,9 @@ main {
   }
 }
 
-/* CSS dari artikeldetail.php (bagian yang sama mungkin diduplikasi, ini tidak masalah) */
+/* CSS dari artikeldetail.php  */
 body {
-  background-color: #e0f5f0; /* Ada sedikit perbedaan background-color di sini */
+  background-color: #e0f5f0; 
   color: #333;
 }
 
@@ -140,7 +138,7 @@ body {
 
 .navbar .btn {
   margin-left: 0.5rem;
-  padding: 0.4rem 1rem; /* Ada sedikit perbedaan padding di sini */
+  padding: 0.4rem 1rem; 
   border-radius: 8px;
   font-weight: bold;
   cursor: pointer;

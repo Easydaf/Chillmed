@@ -5,7 +5,7 @@ html {
 body {
   margin: 0;
   font-family: "Segoe UI", sans-serif;
-  background-color: #8ed2c9;
+  background-color: #acd5cb;
   color: #333;
 }
 
@@ -33,22 +33,22 @@ body {
 }
 
 .admin {
-  background-color: rgb(0, 255, 149);
+  background-color: #00695c;
   color: white;
   border: none;
 }
 
 .logo {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: bold;
-  color: #0b0f0e;
-  margin: 0; /* Hapus margin default h2 */
-  flex-grow: 1; /* Biarkan judul mengambil ruang sisa untuk membantu pemusatan */
+  color: #0B0F0E;
+  margin: 0;
+  flex-grow: 1;
   font-family: "Segoe UI", sans-serif;
 }
 
-.logo strong {
-  color: #00a99d; /* Warna khas ChillMed */
+.logo span {
+  color: #00796b;
 }
 
 nav ul {
@@ -91,11 +91,7 @@ nav ul li a:hover {
 
 #quote {
   transition: opacity 1s ease-in-out;
-}
-
-#quote {
-  transition: opacity 1s ease-in-out;
-  opacity: 5;
+  opacity: 5; 
 }
 
 .features-section {
@@ -130,16 +126,14 @@ nav ul li a:hover {
   transform: translateY(-5px);
 }
 
-/* --- Tambahan CSS untuk menghilangkan garis bawah pada link di dalam feature-card --- */
 .feature-card a {
-  text-decoration: none; /* Menghilangkan garis bawah */
-  color: #00a99d; /* Mengatur warna teks link sesuai warna h3 di feature-card */
+  text-decoration: none;
+  color: #00a99d;
 }
 
 .feature-card a:hover {
-  color: #00695c; /* Mengubah warna teks link saat di-hover */
+  color: #00695c;
 }
-/* ------------------------------------------------------------------------------- */
 
 .feature-card h3 {
   color: #00a99d;
@@ -155,9 +149,267 @@ nav ul li a:hover {
   text-decoration: none;
   padding: 0.5rem 1rem;
   margin: 0 1rem;
-
   margin-left: 0.5rem;
   padding: 8px 16px;
   border-radius: 8px;
   font-weight: bold;
+}
+
+.about-us-section {
+  padding: 80px 50px;
+  background-color: #F8FDFB;
+  text-align: center;
+}
+
+.about-us-section h2 {
+  font-size: 38px;
+  color: #004D40;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.about-us-section .subtitle {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 50px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.about-us-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 40px;
+  text-align: left;
+}
+
+.about-us-text-block {
+  flex: 1;
+  padding-right: 0;
+}
+
+.about-us-text-block h3 {
+  font-size: 32px;
+  color: #00796B;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.about-us-text-block h3 strong {
+  color: #00A99D;
+}
+
+.about-us-text-block p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #444;
+  margin-bottom: 15px;
+}
+
+.about-us-image-gallery {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 500px;
+  margin-top: 20px;
+}
+
+.about-us-image-gallery img {
+  width: 100%;
+  height: 225px;
+  object-fit: cover;
+  border-radius: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.about-us-image-gallery img:hover {
+  transform: scale(1.03);
+}
+
+@media (min-width: 768px) {
+  .about-us-content-wrapper {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 60px;
+  }
+
+  .about-us-text-block {
+    padding-right: 0;
+    flex: 2;
+    max-width: 50%;
+  }
+
+  .about-us-image-gallery {
+    flex: 1;
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 1200px) {
+  .about-us-content-wrapper {
+    max-width: 1000px;
+  }
+}
+
+.new-footer {
+  background-color: #2b2b2b;
+  color: #f0f0f0;
+  font-family: "Poppins", sans-serif;
+  margin-top: auto;
+  padding-top: 40px;
+  box-sizing: border-box;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 30px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-section {
+  flex: 1 1 45%;
+  min-width: 300px;
+  padding: 15px;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.footer-section h3 {
+  color: #ffffff;
+  font-size: 1.1em;
+  margin-bottom: 15px;
+}
+
+.footer-section p {
+  font-size: 0.9em;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.footer-section .icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.social-icons {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.social-icon-circle {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #4a4a4a;
+  color: white;
+  text-decoration: none;
+  font-size: 1.2em;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.social-icon-circle:hover {
+  background-color: #6a6a6a;
+}
+
+.footer-middle {
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.chillmed-logo-placeholder .logo {
+  font-size: 2.2em;
+  font-weight: bold;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+}
+
+.chillmed-logo-placeholder .logo span {
+  color: #00796b;
+}
+
+.footer-bottom-bar {
+  background-color: #1f1f1f;
+  color: #bbb;
+  padding: 15px 20px;
+  font-size: 0.8em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  text-align: center;
+}
+
+.footer-bottom-bar p {
+  margin: 0;
+}
+
+.footer-bottom-bar a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .footer-top {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-section {
+    min-width: unset;
+    width: 100%;
+    text-align: center;
+  }
+
+  .footer-section p {
+    justify-content: center;
+  }
+
+  .social-icons {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .new-footer {
+    padding-top: 30px;
+  }
+  .footer-section h3 {
+    font-size: 1em;
+  }
+  .footer-section p {
+    font-size: 0.85em;
+  }
+  .social-icon-circle {
+    width: 35px;
+    height: 35px;
+    font-size: 1em;
+  }
+  .footer-bottom-bar {
+    flex-direction: column;
+    text-align: center;
+    font-size: 0.75em;
+  }
 }

@@ -29,8 +29,6 @@
 
             foreach ($questions as $i => $q) {
                 echo "<div class='question'>";
-                // Perhatikan PERUBAHAN DI SINI: name='q" . ($i + 1) . "'
-                // Ini akan menghasilkan nama input: q1, q2, ..., q9
                 echo "<label><strong>Pertanyaan " . ($i + 1) . ":</strong> $q</label><br>";
                 for ($j = 1; $j <= 5; $j++) {
                     echo "<label>

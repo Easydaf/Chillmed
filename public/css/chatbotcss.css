@@ -26,47 +26,45 @@ body {
   border-bottom: 1px solid #ddd;
   flex-shrink: 0;
 
-  /* Tambahan untuk menata elemen di header */
-  display: flex; /* Aktifkan flexbox */
-  align-items: center; /* Pusatkan item secara vertikal */
-  justify-content: center; /* Pusatkan konten secara horizontal secara default */
-  position: relative; /* Penting untuk posisi absolut dari judul */
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  position: relative; 
 }
 
 
 .back-button {
-  /* Posisi tombol kembali di pojok kiri */
-  position: absolute; /* Posisikan secara absolut */
-  left: 16px; /* Jarak dari kiri */
-  top: 50%; /* Mulai dari tengah vertikal */
+  position: absolute; 
+  left: 16px; 
+  top: 50%; 
   transform: translateY(
     -50%
-  ); /* Geser ke atas 50% dari tingginya sendiri untuk pusatkan */
+  ); 
 
   background: none;
   border: none;
-  font-size: 1.5rem; /* Ukuran ikon */
-  color: #00695c; /* Warna ikon */
+  font-size: 1.5rem; 
+  color: #00695c; 
   cursor: pointer;
-  text-decoration: none; /* Hapus garis bawah default link */
-  padding: 5px; /* Tambahkan padding agar mudah diklik */
-  z-index: 10; /* Pastikan tombol di atas elemen lain */
+  text-decoration: none; 
+  padding: 5px; 
+  z-index: 10; 
 }
 
 .back-button:hover {
-  color: #004d40; /* Warna hover */
+  color: #004d40; 
 }
 
 .header-title {
-  /* Judul ChillMed di Tengah */
-  margin: 0; /* Hapus margin default h2 */
-  text-align: center; /* Pusatkan teks di dalam elemen */
-  flex-grow: 1; /* Biarkan judul mengambil ruang sisa untuk membantu pemusatan */
-  color: #0e1413; /* Warna teks yang lebih menonjol */
+  margin: 0; 
+  text-align: center; 
+  flex-grow: 1; 
+  color: #0e1413; 
 }
 
-.header-title strong {
-  color: #00a99d; /* Tebalkan teks untuk penekanan */
+.header-title span {
+  color: #00796b; 
+  font-family: "Segoe UI", sans-serif;
 }
 
 .chat-box {

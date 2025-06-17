@@ -34,7 +34,7 @@
                 <?= session()->getFlashdata('error') ?>
             </div>
         <?php endif; ?>
-        <?php if (session()->getFlashdata('errors')): // Untuk error validasi dari form POST ?>
+        <?php if (session()->getFlashdata('errors')):  ?>
             <div class="alert error" style="display:none;" data-sweetalert-type="error">
                 <ul>
                     <?php foreach (session()->getFlashdata('errors') as $error): ?>
@@ -95,10 +95,10 @@
     <script src="<?= base_url('js/manage_articles.js') ?>"></script>
 
     <script>
-    // Tampilkan SweetAlert dari flashdata saat halaman dimuat
+    
     $(document).ready(function() {
         const successMessage = $('.alert.success').text().trim();
-        const errorMessage = $('.alert.error').text().trim(); // Bisa error umum atau error validasi
+        const errorMessage = $('.alert.error').text().trim(); 
 
         if (successMessage) {
             Swal.fire({

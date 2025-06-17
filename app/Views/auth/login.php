@@ -40,7 +40,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.all.min.js"></script>
     <script>
-        // Tampilkan SweetAlert dari flashdata saat halaman dimuat
+        
         $(document).ready(function() {
             const successMessage = $('.alert.alert-success').text().trim();
             const errorMessage = $('.alert.alert-danger').text().trim();
@@ -53,7 +53,7 @@
                     showConfirmButton: false,
                     timer: 2000
                 }).then(() => {
-                    // Opsional: Hapus pesan dari DOM setelah ditampilkan
+                    
                     $('.alert.alert-success').remove();
                 });
             }
@@ -65,7 +65,7 @@
                     showConfirmButton: false,
                     timer: 3000
                 }).then(() => {
-                    // Opsional: Hapus pesan dari DOM setelah ditampilkan
+                    
                     $('.alert.alert-danger').remove();
                 });
             }

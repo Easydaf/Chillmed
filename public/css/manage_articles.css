@@ -1,6 +1,3 @@
-/* public/css/manage_articles.css */
-
-/* Gaya untuk tabel artikel */
 .data-table {
     width: 100%;
     border-collapse: collapse;
@@ -8,8 +5,8 @@
     background-color: #ffffff;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     font-size: 0.95em;
-    border-radius: 8px; /* Sudut membulat untuk tabel */
-    overflow: hidden; /* Memastikan sudut membulat terlihat */
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .data-table th, .data-table td {
@@ -19,26 +16,24 @@
 }
 
 .data-table th {
-    background-color: #00796b; /* Warna header tabel sesuai tema ChillMed */
+    background-color: #00796b;
     color: white;
     font-weight: bold;
 }
 
 .data-table tr:nth-child(even) {
-    background-color: #f2f2f2; /* Warna latar belakang selang-seling */
+    background-color: #f2f2f2;
 }
 
-/* Gaya untuk thumbnail gambar artikel di tabel */
 .article-image-thumb {
     max-width: 80px;
     max-height: 50px;
-    object-fit: cover; /* Memastikan gambar terpotong rapi */
+    object-fit: cover;
     border-radius: 4px;
 }
 
-/* Gaya untuk tombol aksi (Edit/Hapus) */
 .item-actions a, .item-actions button {
-    background-color: #2196f3; /* Warna biru untuk Edit */
+    background-color: #2196f3;
     color: white;
     padding: 8px 12px;
     border: none;
@@ -47,22 +42,21 @@
     text-decoration: none;
     font-size: 0.9em;
     transition: background-color 0.2s ease;
-    margin-right: 5px; /* Jarak antar tombol */
+    margin-right: 5px;
 }
 
 .item-actions a:hover {
-    background-color: #0b7dda; /* Warna hover edit */
+    background-color: #0b7dda;
 }
 
 .item-actions button {
-    background-color: #f44336; /* Warna merah untuk Delete */
+    background-color: #f44336;
 }
 
 .item-actions button:hover {
-    background-color: #d32f2f; /* Warna hover delete */
+    background-color: #d32f2f;
 }
 
-/* Gaya untuk tombol "Tambah Artikel" */
 .add-button {
     background-color: #00796b;
     color: white;
@@ -73,14 +67,13 @@
     font-size: 1em;
     margin-bottom: 20px;
     display: inline-block;
-    text-decoration: none; /* Untuk link */
+    text-decoration: none;
     transition: background-color 0.3s;
 }
 .add-button:hover {
     background-color: #005f4f;
 }
 
-/* Gaya untuk form (Tambah/Edit Artikel) */
 .form-container {
     background-color: #ffffff;
     padding: 30px;
@@ -151,7 +144,6 @@
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* Pesan "Belum ada artikel" */
 .no-data-message {
     text-align: center;
     color: #666;
@@ -160,10 +152,9 @@
     font-size: 1.1em;
 }
 
-/* Responsiveness untuk tabel */
 @media (max-width: 768px) {
     .data-table, .data-table tbody, .data-table thead, .data-table tr, .data-table th, .data-table td {
-        display: block; /* Membuat tabel responsif */
+        display: block;
     }
 
     .data-table thead tr {
