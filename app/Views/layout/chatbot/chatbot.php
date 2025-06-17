@@ -14,7 +14,7 @@
         <div class="chat-header">
             <a href="<?= base_url('dashboard') ?>" class="back-button">
                 <i class="fas fa-arrow-left"></i> </a>
-            <h2 class="header-title"><strong>Chill</strong>Med</h2>
+            <h2 class="header-title"><span>Chill</span>Med</h2>
         </div>
         <div class="chat-box" id="chat-box">
             <div class="bot-message">

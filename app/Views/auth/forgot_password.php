@@ -40,7 +40,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.all.min.js"></script>
 
     <script>
-    // Tampilkan SweetAlert dari flashdata saat halaman dimuat
+    
     $(document).ready(function() {
         const successMessage = $('.alert.alert-success').text().trim();
         const errorMessage = $('.alert.alert-danger').text().trim();

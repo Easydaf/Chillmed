@@ -65,7 +65,7 @@
                 title: 'Gagal!',
                 text: errorMessage,
                 showConfirmButton: false,
-                timer: 5000 // Beri waktu lebih untuk error
+                timer: 5000 
             });
         }
     });

@@ -91,7 +91,7 @@
     <script src="<?= base_url('js/manage_users.js') ?>"></script>
 
     <script>
-    // Tampilkan SweetAlert dari flashdata saat halaman dimuat
+    
     $(document).ready(function() {
         const successMessage = $('.alert.success').text().trim();
         const errorMessage = $('.alert.error').text().trim();

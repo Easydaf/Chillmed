@@ -27,7 +27,7 @@
                 "Masalah makan saya berdampak negatif pada kehidupan sosial atau akademik saya."
             ];
 
-            // Pilihan skala 1-5
+            
             $scaleOptions = [
                 1 => "Tidak sama sekali",
                 2 => "Beberapa hari",
@@ -42,7 +42,7 @@
                 foreach ($scaleOptions as $value => $label) {
                     echo "<label>
                                 <input type='radio' name='q" . ($i + 1) . "' value='$value' required> $label
-                            </label><br>"; // <-- PERUBAHAN DI SINI: name='q" . ($i + 1) . "'
+                            </label><br>"; 
                 }
                 echo "</div><hr>";
             }

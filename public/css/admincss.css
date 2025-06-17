@@ -1,10 +1,8 @@
-/* public/css/admincss.css */
-
 body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
-    background-color: #d2f0ec; /* Warna latar belakang admin */
-    display: flex; /* Menggunakan flexbox untuk layout utama */
+    background-color: #d2f0ec; 
+    display: flex; 
     min-height: 100vh;
 }
 
@@ -15,23 +13,25 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: fixed; /* Navbar tetap di atas */
-    width: 100%; /* Lebar penuh */
-    box-sizing: border-box; /* Padding termasuk dalam lebar */
+    position: fixed; 
+    width: 100%; 
+    box-sizing: border-box; 
     left: 0;
     top: 0;
     z-index: 1000;
-    height: 60px; /* Tinggi navbar */
+    height: 60px; 
 }
 
 .navbar .logo {
     font-size: 24px;
     font-weight: bold;
     color: #333;
+    font-family: "Segoe UI", sans-serif;
 }
 
 .navbar .logo span {
-    color: #00796b; /* Warna khas ChillMed */
+    color: #00796b; 
+    font-family: "Segoe UI", sans-serif;
 }
 
 .navbar .profile {
@@ -50,13 +50,12 @@ body {
     border: 1px solid #ddd;
 }
 
-/* KARENA TIDAK ADA SIDEBAR, CONTENT AKAN FULL LEBAR */
 .content {
-    margin-left: 0; /* Hapus offset sidebar */
-    padding: 80px 30px 30px 30px; /* Offset untuk navbar + padding konten */
-    flex-grow: 1; /* Konten mengambil sisa ruang */
-    width: 100%; /* Memastikan konten mengisi lebar */
-    box-sizing: border-box; /* Padding termasuk dalam lebar */
+    margin-left: 0; 
+    padding: 80px 30px 30px 30px; 
+    flex-grow: 1; 
+    width: 100%; 
+    box-sizing: border-box; 
 }
 
 h1 {
@@ -207,9 +206,8 @@ h1 {
     color: #004d40;
 }
 
-/* Modal Styles */
 .modal {
-    display: none; /* UBAH ATAU PASTIKAN INI ADALAH 'none' */
+    display: none; 
     position: fixed;
     z-index: 1001;
     left: 0;
@@ -220,8 +218,8 @@ h1 {
     background-color: rgba(0,0,0,0.4);
     align-items: center;
     justify-content: center;
-    /* display: flex; /* Ini hanya aktif saat JS memanggil .fadeIn() */
 }
+
 .modal-content {
     background-color: #fefefe;
     padding: 30px;

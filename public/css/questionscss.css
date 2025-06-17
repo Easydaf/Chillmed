@@ -65,13 +65,13 @@ h1 {
   font-size: 1.5rem;
   font-weight: bold;
   color: #0b0f0e;
-  margin: 0; /* Hapus margin default h2 */
-  flex-grow: 1; /* Biarkan judul mengambil ruang sisa untuk membantu pemusatan */
+  margin: 0; 
+  flex-grow: 1; 
   font-family: "Segoe UI", sans-serif;
 }
 
-.logo strong {
-  color: #00a99d;
+.logo span {
+  color: #00796b;
   font-family: "Segoe UI", sans-serif;
 }
 

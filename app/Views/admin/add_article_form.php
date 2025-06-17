@@ -32,7 +32,7 @@
                 <?= session()->getFlashdata('error') ?>
             </div>
         <?php endif; ?>
-        <?php if (session()->getFlashdata('errors')): // Untuk error validasi dari form POST ?>
+        <?php if (session()->getFlashdata('errors')): ?>
             <div class="alert error" style="display:none;" data-sweetalert-type="error">
                 <ul>
                     <?php foreach (session()->getFlashdata('errors') as $error): ?>
@@ -71,7 +71,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.all.min.js"></script>
     <script>
-    // Tampilkan SweetAlert dari flashdata saat halaman dimuat
+
     $(document).ready(function() {
         const successMessage = $('.alert.success').text().trim();
         const errorMessage = $('.alert.error').text().trim();
@@ -91,9 +91,9 @@
             Swal.fire({
                 icon: 'error',
                 title: 'Gagal!',
-                html: errorMessage.startsWith('<ul>') ? errorMessage : `<p>${errorMessage}</p>`, // Tangani error validasi dari PHP
+                html: errorMessage.startsWith('<ul>') ? errorMessage : `<p>${errorMessage}</p>`, 
                 showConfirmButton: false,
-                timer: 4000 // Beri waktu lebih untuk membaca error validasi
+                timer: 4000 
             }).then(() => {
                 $('.alert.error').remove();
             });

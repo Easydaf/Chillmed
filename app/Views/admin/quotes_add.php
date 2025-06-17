@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="<?= base_url('css/admincss.css') ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* CSS spesifik untuk form, bisa dipindahkan ke admincss.css jika ingin diglobalisasi */
         .form-container {
             background-color: #ffffff;
             padding: 30px;
@@ -89,7 +88,7 @@
         <?php if (session()->getFlashdata('error')): ?>
             <div class="alert error"><?= session()->getFlashdata('error') ?></div>
         <?php endif; ?>
-        <?php if (session()->getFlashdata('errors')): // Untuk error validasi dari form POST ?>
+        <?php if (session()->getFlashdata('errors')): ?>
             <div class="alert error">
                 <ul>
                     <?php foreach (session()->getFlashdata('errors') as $error): ?>

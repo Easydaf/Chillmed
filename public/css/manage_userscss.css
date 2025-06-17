@@ -1,6 +1,3 @@
-/* public/css/manage_users.css */
-
-/* Gaya untuk tabel */
 .data-table {
     width: 100%;
     border-collapse: collapse;
@@ -8,8 +5,8 @@
     background-color: #ffffff;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     font-size: 0.95em;
-    border-radius: 8px; /* Sudut membulat untuk tabel */
-    overflow: hidden; /* Memastikan sudut membulat terlihat */
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .data-table th, .data-table td {
@@ -19,23 +16,22 @@
 }
 
 .data-table th {
-    background-color: #00796b; /* Warna header tabel sesuai tema ChillMed */
+    background-color: #00796b;
     color: white;
     font-weight: bold;
 }
 
 .data-table tr:nth-child(even) {
-    background-color: #f2f2f2; /* Warna latar belakang selang-seling */
+    background-color: #f2f2f2;
 }
 
-/* Gaya untuk dropdown role */
 .role-select {
     padding: 5px 8px;
     border-radius: 4px;
     border: 1px solid #ccc;
     font-size: 0.9em;
     cursor: pointer;
-    background-color: #e9f5f2; /* Latar belakang dropdown sesuai tema */
+    background-color: #e9f5f2;
     color: #333;
     transition: all 0.2s ease;
 }
@@ -46,9 +42,8 @@
     box-shadow: 0 0 0 2px rgba(0, 121, 107, 0.2);
 }
 
-/* Gaya untuk tombol aksi (Edit/Hapus) */
 .item-actions a, .item-actions button {
-    background-color: #f44336; /* Warna merah untuk delete */
+    background-color: #f44336;
     color: white;
     padding: 8px 12px;
     border: none;
@@ -57,35 +52,13 @@
     text-decoration: none;
     font-size: 0.9em;
     transition: background-color 0.2s ease;
-    margin-left: 5px; /* Jarak antar tombol */
+    margin-left: 5px;
 }
 
 .item-actions a:hover, .item-actions button:hover {
-    background-color: #d32f2f; /* Warna hover delete */
+    background-color: #d32f2f;
 }
 
-/* Tombol Edit di sini akan sama dengan tombol delete karena hanya ada 1 aksi utama per baris user */
-/* Jika Anda ingin tombol edit terpisah (misalnya untuk mengedit profil lengkap, bukan hanya role),
-   maka gaya ini bisa disesuaikan atau dihapus jika edit hanya via dropdown */
-/* Contoh gaya untuk tombol edit terpisah (jika ada):
-.item-actions .btn-edit-user {
-    background-color: #2196f3;
-    color: white;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none;
-    font-size: 0.9em;
-    transition: background-color 0.2s ease;
-    margin-right: 5px;
-}
-.item-actions .btn-edit-user:hover {
-    background-color: #0b7dda;
-}
-*/
-
-/* Pesan "Belum ada user" */
 .no-data-message {
     text-align: center;
     color: #666;
@@ -94,7 +67,6 @@
     font-size: 1.1em;
 }
 
-/* Perbaikan alignment untuk konten table jika tidak ada sidebar (dari admincss.css) */
 .content {
     margin-left: 0;
     padding: 80px 30px 30px 30px;
@@ -103,10 +75,9 @@
     box-sizing: border-box;
 }
 
-/* Responsiveness untuk tabel */
 @media (max-width: 768px) {
     .data-table, .data-table tbody, .data-table thead, .data-table tr, .data-table th, .data-table td {
-        display: block; /* Membuat tabel responsif */
+        display: block;
     }
 
     .data-table thead tr {

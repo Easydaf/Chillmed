@@ -35,7 +35,7 @@
                 <?= session()->getFlashdata('error') ?>
             </div>
         <?php endif; ?>
-        <?php if (session()->getFlashdata('errors')): // Untuk error validasi dari form POST ?>
+        <?php if (session()->getFlashdata('errors')):  ?>
             <div class="alert error" style="display:none;" data-sweetalert-type="error">
                 <ul>
                     <?php foreach (session()->getFlashdata('errors') as $error): ?>
@@ -78,7 +78,6 @@
         const csrfName = $('meta[name="csrf-name"]').attr('content') || '';
         let csrfHash = $('meta[name="csrf-token"]').attr('content') || '';
 
-        // Update CSRF token on AJAX complete (for delete operation)
         $(document).ajaxComplete(function(event, xhr, settings) {
             if (settings.type === 'POST' || settings.type === 'post') {
                 const newToken = xhr.getResponseHeader('X-CSRF-TOKEN');
@@ -94,7 +93,6 @@
             }
         });
 
-        // Handle klik tombol hapus quote (SweetAlert Konfirmasi)
         $('.btn-delete').on('click', function() {
             const quoteId = $(this).data('quote-id');
             const quoteText = $(this).data('quote-text');
@@ -104,25 +102,24 @@
                 text: `Anda yakin ingin menghapus quote "${quoteText}" (ID: ${quoteId})? Aksi ini tidak dapat dibatalkan!`,
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#d33', // Warna merah untuk hapus
+                confirmButtonColor: '#d33', 
                 cancelButtonColor: '#3085d6',
                 confirmButtonText: 'Ya, Hapus!',
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Jika dikonfirmasi, kirim form POST untuk penghapusan (full page refresh)
+                   
                     const deleteForm = $(`<form action="${baseUrl}admin/quotes/delete/${quoteId}" method="post"></form>`);
                     
                     if (csrfName && csrfHash) {
                         deleteForm.append(`<input type="hidden" name="${csrfName}" value="${csrfHash}">`);
                     }
                     $('body').append(deleteForm);
-                    deleteForm.submit(); // Submit form
+                    deleteForm.submit(); 
                 }
             });
         });
 
-        // Tampilkan SweetAlert dari flashdata saat halaman dimuat
         const successMessage = $('.alert.success').text().trim();
         const errorMessage = $('.alert.error').text().trim();
         const errorValidation = $('.alert.error ul').html();
