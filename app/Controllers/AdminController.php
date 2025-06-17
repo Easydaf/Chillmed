@@ -33,10 +33,10 @@ class AdminController extends BaseController
             'totalArticles' => $totalArticles,
             'totalUsers'    => $totalUsers,
         ];
-        return view('admin/admin', $data); // Menggunakan admin/admin.php
+        return view('admin/admin', $data); // halaman admin
     }
 
-    // --- Manajemen Quotes ---
+    // quotes controller
     public function quotes()
     {
         $data = [
@@ -46,14 +46,13 @@ class AdminController extends BaseController
         return view('admin/manage_quotes', $data);
     }
 
-    // FUNGSI addQuote (untuk Tampilan Form & Pemrosesan POST)
+    // tammbah quote
     public function addQuote()
     {
         if ($this->request->getMethod() === 'POST') {
             $validation = \Config\Services::validation();
             $rules = [
                 'quote_text' => 'required|min_length[5]|max_length[500]',
-                // 'author' dihapus dari validasi karena akan diisi otomatis
             ];
             $validation->setRules($rules);
 
@@ -61,14 +60,14 @@ class AdminController extends BaseController
                 return redirect()->back()->withInput()->with('errors', $validation->getErrors());
             }
 
-            // Ambil user ID dan nama author dari sesi
+            // user id dan author
             $loggedInUserId = session()->get('user')['id'];
             $loggedInUserName = session()->get('user')['name'];
 
             $data = [
-                'user_id'    => $loggedInUserId, // Simpan user_id
+                'user_id'    => $loggedInUserId,
                 'quote_text' => $this->request->getPost('quote_text'),
-                'author'     => $loggedInUserName, // Otomatis isi dengan nama admin
+                'author'     => $loggedInUserName, // nama user dari yang upload
             ];
 
             if ($this->quoteModel->insert($data)) {
@@ -79,7 +78,7 @@ class AdminController extends BaseController
         }
         return view('admin/quotes_add', ['pageTitle' => 'Tambah Quote Baru']);
     }
-
+    // edit quote
     public function editQuote($id)
     {
         $quote = $this->quoteModel->find($id);
@@ -92,7 +91,6 @@ class AdminController extends BaseController
             $validation = \Config\Services::validation();
             $rules = [
                 'quote_text' => 'required|min_length[5]|max_length[500]',
-                // 'author' dihapus dari validasi karena akan diisi otomatis
             ];
             $validation->setRules($rules);
 
@@ -100,14 +98,13 @@ class AdminController extends BaseController
                 return redirect()->back()->withInput()->with('errors', $validation->getErrors());
             }
             
-            // Ambil user ID dan nama author dari sesi
             $loggedInUserId = session()->get('user')['id'];
             $loggedInUserName = session()->get('user')['name'];
 
             $data = [
-                'user_id'    => $loggedInUserId, // Update user_id (jika perlu diganti)
+                'user_id'    => $loggedInUserId, 
                 'quote_text' => $this->request->getPost('quote_text'),
-                'author'     => $loggedInUserName, // Otomatis isi dengan nama admin
+                'author'     => $loggedInUserName,
             ];
 
             if ($this->quoteModel->update($id, $data)) {
@@ -119,7 +116,7 @@ class AdminController extends BaseController
         return view('admin/quotes_edit', ['pageTitle' => 'Edit Quote', 'quote' => $quote]);
     }
 
-    // FUNGSI deleteQuote (untuk Pemrosesan POST)
+    // delete quote
     public function deleteQuote($id)
     {
         if ($this->request->getMethod() === 'POST') {
@@ -133,7 +130,7 @@ class AdminController extends BaseController
     }
 
 
-    // --- Manajemen Artikel ---
+    // artikel contoller
     public function articles()
     {
         $data = [
@@ -151,7 +148,6 @@ class AdminController extends BaseController
                 'title'   => 'required|min_length[5]|max_length[255]',
                 'content' => 'required|min_length[20]',
                 'image'   => 'uploaded[image]|max_size[image,1024]|is_image[image]',
-                // 'author' dihapus dari validasi karena akan diisi otomatis
             ];
             $validation->setRules($rules);
 
@@ -159,7 +155,6 @@ class AdminController extends BaseController
                 return redirect()->back()->withInput()->with('errors', $validation->getErrors());
             }
 
-            // Ambil user ID dan nama author dari sesi
             $loggedInUserId = session()->get('user')['id'];
             $loggedInUserName = session()->get('user')['name'];
 
@@ -168,10 +163,10 @@ class AdminController extends BaseController
             $file->move(FCPATH . 'images', $newName);
 
             $data = [
-                'user_id' => $loggedInUserId, // Simpan user_id
+                'user_id' => $loggedInUserId,
                 'title'   => $this->request->getPost('title'),
                 'content' => $this->request->getPost('content'),
-                'author'  => $loggedInUserName, // Otomatis isi dengan nama admin
+                'author'  => $loggedInUserName,
                 'image'   => $newName,
             ];
 
@@ -184,6 +179,7 @@ class AdminController extends BaseController
         return view('admin/add_article_form', ['pageTitle' => 'Tambah Artikel Baru']);
     }
 
+    // edit article
     public function editArticle($id)
     {
         $article = $this->articleModel->find($id);
@@ -207,15 +203,14 @@ class AdminController extends BaseController
                 return redirect()->back()->withInput()->with('errors', $validation->getErrors());
             }
 
-            // Ambil user ID dan nama author dari sesi
             $loggedInUserId = session()->get('user')['id'];
             $loggedInUserName = session()->get('user')['name'];
             
             $data = [
-                'user_id' => $loggedInUserId, // Update user_id
+                'user_id' => $loggedInUserId,
                 'title'   => $this->request->getPost('title'),
                 'content' => $this->request->getPost('content'),
-                'author'  => $loggedInUserName, // Otomatis isi dengan nama admin
+                'author'  => $loggedInUserName,
             ];
 
             $file = $this->request->getFile('image');
@@ -239,10 +234,9 @@ class AdminController extends BaseController
 
     public function deleteArticle($id)
     {
-        if ($this->request->getMethod() === 'POST') { // PASTIKAN 'POST'
+        if ($this->request->getMethod() === 'POST') {
             $article = $this->articleModel->find($id);
             if ($article) {
-                // Hapus file gambar terkait jika ada
                 if ($article['image'] && file_exists(FCPATH . 'images/' . $article['image'])) {
                     unlink(FCPATH . 'images/' . $article['image']);
                 }
@@ -259,20 +253,20 @@ class AdminController extends BaseController
         return redirect()->to(base_url('admin/articles'))->with('error', 'Metode penghapusan tidak diizinkan.');
     }
 
-    // --- Manajemen Users ---
+    // user controller
     public function users()
     {
         $data = [
             'pageTitle' => 'Manajemen Users',
-            'users'     => $this->userModel->findAll(), // Mengambil semua user dari database
+            'users'     => $this->userModel->findAll(),
         ];
         return view('admin/manage_users', $data);
     }
 
-    // Mengedit role user (memproses AJAX POST)
+    // edit user role
     public function editUserRole($id)
     {
-        if ($this->request->isAJAX() && $this->request->getMethod() === 'POST') { // PASTIKAN 'POST'
+        if ($this->request->isAJAX() && $this->request->getMethod() === 'POST') {
             $user = $this->userModel->find($id);
 
             if (!$user) {
@@ -285,12 +279,11 @@ class AdminController extends BaseController
                 return $this->response->setJSON(['status' => 'error', 'message' => 'Role tidak valid.']);
             }
 
-            // Mencegah admin mengubah role-nya sendiri menjadi non-admin
             if (session()->get('user')['id'] == $id && $newRole !== 'admin') {
                 return $this->response->setJSON(['status' => 'error', 'message' => 'Anda tidak bisa mengubah role Anda sendiri.']);
             }
 
-            if ($user['role'] === $newRole) { // Jika role tidak berubah
+            if ($user['role'] === $newRole) {
                 return $this->response->setJSON(['status' => 'success', 'message' => 'Role user tidak berubah.']);
             }
 
@@ -303,11 +296,10 @@ class AdminController extends BaseController
         return $this->response->setStatusCode(405)->setJSON(['status' => 'error', 'message' => 'Metode tidak diizinkan.']);
     }
 
-    // Menghapus user (memproses POST dari form HTML)
+    // delete user
     public function deleteUser($id)
     {
-        if ($this->request->getMethod() === 'POST') { // PASTIKAN 'POST'
-            // Mencegah admin menghapus dirinya sendiri
+        if ($this->request->getMethod() === 'POST') {
             if (session()->get('user')['id'] == $id) {
                 return redirect()->to(base_url('admin/users'))->with('error', 'Anda tidak bisa menghapus akun Anda sendiri.');
             }

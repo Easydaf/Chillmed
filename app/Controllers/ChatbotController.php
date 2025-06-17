@@ -8,19 +8,10 @@ use GuzzleHttp\Exception\RequestException; // Import untuk menangani exception G
 
 class ChatbotController extends Controller
 {
-    /**
-     * Metode default untuk menampilkan view chatbot.
-     * Biasanya akan me-load file app/Views/chatbot.php
-     */
     public function index()
     {
         return view('layout/chatbot/chatbot');
     }
-
-    /**
-     * Metode untuk memproses pesan dari pengguna dan memberikan respons.
-     * Menggunakan sistem berbasis aturan dengan manajemen sesi untuk alur percakapan.
-     */
     public function message()
     {
         $session = session(); // Mengambil instance sesi
@@ -30,8 +21,6 @@ class ChatbotController extends Controller
         // Mengambil 'step' percakapan dari sesi, default 0 jika belum ada
         $step = $session->get('step') ?? 0;
 
-        // Simpan riwayat percakapan untuk potensi penggunaan Gemini (opsional, jika ingin AI mengingat konteks)
-        // $chatHistory = $session->get('chat_history') ?? [];
 
         // Logika percakapan berdasarkan 'step'
         switch ($step) {
@@ -42,21 +31,27 @@ class ChatbotController extends Controller
                 } elseif (str_contains($input, 'sedih') || str_contains($input, 'depresi') || str_contains($input, 'putus asa') || str_contains($input, 'tidak semangat') || str_contains($input, 'menangis')) {
                     $response = "Aku turut prihatin kamu merasakan itu. Sudah berapa lama perasaan sedih ini muncul? Apakah ada hal lain yang membuatmu kehilangan minat?";
                     $session->set('step', 10); // Lanjut ke alur Depresi
+
                 } elseif (str_contains($input, 'cemas') || str_contains($input, 'gelisah') || str_contains($input, 'panik') || str_contains($input, 'khawatir') || str_contains($input, 'takut')) {
                     $response = "Aku mengerti perasaan cemas itu tidak nyaman. Kecemasan ini sering muncul kapan? Apakah ada pemicu tertentu?";
                     $session->set('step', 20); // Lanjut ke alur Kecemasan
+
                 } elseif (str_contains($input, 'stress') || str_contains($input, 'lelah') || str_contains($input, 'burnout') || str_contains($input, 'sulit fokus') || str_contains($input, 'tugas menumpuk') || str_contains($input, 'tertekan')) {
                     $response = "Aku paham rasanya lelah dan sulit fokus. Seberapa sering kamu merasakan ini? Apakah ini terkait dengan tekanan kuliah atau tugas?";
                     $session->set('step', 30); // Lanjut ke alur Burnout/Stres Akademik
+
                 } elseif (str_contains($input, 'tidur') || str_contains($input, 'insomnia') || str_contains($input, 'begadang') || str_contains($input, 'sulit tidur')) {
                     $response = "Sulit tidur memang tidak nyaman. Sudah berapa lama kamu mengalami masalah tidur ini? Apakah kamu kesulitan memulai tidur atau atau sering terbangun di malam hari?";
                     $session->set('step', 40); // Lanjut ke alur Masalah Tidur
+
                 } elseif (str_contains($input, 'palsu') || str_contains($input, 'pura-pura') || str_contains($input, 'baik-baik saja') || str_contains($input, 'sembunyi')) {
                     $response = "Aku mengerti. Terkadang kita merasa harus terlihat baik-baik saja di luar, padahal di dalam ada banyak tekanan. Apakah kamu sering merasa seperti ini?";
                     $session->set('step', 50); // Lanjut ke alur Duck Syndrome
+
                 } elseif (str_contains($input, 'makan') || str_contains($input, 'berat badan') || str_contains($input, 'diet') || str_contains($input, 'kontrol makanan') || str_contains($input, 'cemas makanan')) {
                     $response = "Aku perhatikan kamu menyebut tentang makan atau berat badan. Bisakah kamu ceritakan lebih lanjut tentang kekhawatiranmu terkait hal itu?";
                     $session->set('step', 60); // Lanjut ke alur Eating Disorder
+
                 } else {
                     // Jika tidak ada kata kunci yang cocok di rule-based, fallback ke Gemini API
                     $response = $this->getGeminiResponse($input);
@@ -203,14 +198,6 @@ class ChatbotController extends Controller
                 break;
         }
 
-        // Tambahkan userMessage ke chat history sebelum respon bot
-        // if ($step == 0) { // Hanya jika tidak dalam alur step-by-step
-        //     $chatHistory[] = ["role" => "user", "parts" => [["text" => $input]]];
-        //     $chatHistory[] = ["role" => "model", "parts" => [["text" => $response]]];
-        //     $session->set('chat_history', $chatHistory);
-        // }
-
-
         return $this->response->setJSON(['response' => $response]);
     }
 
@@ -222,8 +209,6 @@ class ChatbotController extends Controller
      */
     private function getGeminiResponse($userMessage)
     {
-        // Ganti dengan API Key Gemini Anda
-        // Disarankan untuk menyimpan API Key di file .env dan mengaksesnya menggunakan getenv()
         $apiKey = getenv('GEMINI_API_KEY');
         $apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={$apiKey}";
 
@@ -250,17 +235,6 @@ class ChatbotController extends Controller
 
         $payload = [
             "contents" => $chatHistory,
-            // Anda bisa menambahkan generationConfig jika ingin respons terstruktur (misal JSON)
-            // "generationConfig" => [
-            //     "responseMimeType" => "application/json",
-            //     "responseSchema" => [
-            //         "type" => "OBJECT",
-            //         "properties" => [
-            //             "reply" => ["type" => "STRING"],
-            //             "suggestion" => ["type" => "STRING"]
-            //         ]
-            //     ]
-            // ]
         ];
 
         $client = new Client(); // Inisialisasi Guzzle Client
@@ -312,19 +286,4 @@ class ChatbotController extends Controller
      * @param string $input Pesan dari pengguna.
      * @return string Respons dari bot.
      */
-    private function getBotResponse($input)
-    {
-        // Metode ini sekarang hanya sebagai placeholder atau untuk respons sangat dasar
-        // yang tidak memerlukan alur step-by-step atau Gemini.
-        // Sebagian besar logika kini ada di switch($step) dan getGeminiResponse.
-        if (str_contains($input, 'stress') !== false) {
-            return 'Coba tarik napas dalam-dalam dan beri dirimu waktu untuk istirahat.';
-        } elseif (str_contains($input, 'cemas') !== false || str_contains($input, 'anxiety') !== false) {
-            return 'Kamu bisa coba teknik pernapasan 4-7-8. Mau aku bantu pandu?';
-        } elseif (str_contains($input, 'halo') !== false) {
-            return 'Halo juga! 😊 Apa yang sedang kamu rasakan hari ini?';
-        } else {
-            return 'Maaf, aku belum memahami itu. Bisa dijelaskan lebih lanjut?';
-        }
-    }
 }

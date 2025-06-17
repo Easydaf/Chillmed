@@ -6,42 +6,32 @@ use CodeIgniter\Controller;
 
 class Hasil extends BaseController
 {
-    /**
-     * Metode utama untuk menampilkan hasil kuesioner.
-     * Menerima parameter $kategori dari URL (misal: /hasil/anxiety).
-     * Mengambil skor dari session flashdata yang dikirim oleh QuestionsController.
-     */
+
     public function index($kategori = null) // Ubah dari 'anxiety()' menjadi 'index($kategori = null)'
     {
         $session = session();
 
-        // 1. Ambil skor dan kategori dari flashdata sesi
+        // Ambil score
         $score = $session->getFlashdata('kuesioner_score');
         $kategori_dari_sesi = $session->getFlashdata('kuesioner_kategori');
 
-        // 2. Validasi: Pastikan data valid dan sesuai dengan kategori yang diminta
+        // supaya tidak bisa langsung ke hasil.php
         if (empty($score) || empty($kategori_dari_sesi) || $kategori_dari_sesi !== $kategori) {
-            // Jika data tidak ada atau tidak valid (misal: halaman diakses langsung tanpa submit form),
-            // redirect pengguna kembali ke halaman daftar pertanyaan dengan pesan error.
             return redirect()->to('/questions')->with('error', 'Data hasil tidak ditemukan atau tidak valid. Silakan coba kuesioner lagi.');
         }
 
-        // 3. Panggil metode helper untuk menganalisis skor berdasarkan kategori
+        // analisis score
         $hasil_pesan = $this->analyzeScore($kategori, $score);
 
-        // 4. Muat view 'hasil.php' dengan data yang diperlukan
-        //    KOREKSI INI: Path ke view 'hasil.php' yang benar adalah 'layout/questions/hasil'
+        // hasil score
         return view('layout/questions/hasil', [
-            'skor'    => $score,        // Akan tersedia sebagai $skor di view HTML
-            'hasil'   => $hasil_pesan,  // Akan tersedia sebagai $hasil di view HTML
-            'kategori' => $kategori    // Opsional: bisa digunakan di view untuk judul atau debugging
+            'skor'    => $score,
+            'hasil'   => $hasil_pesan,
+            'kategori' => $kategori
         ]);
     }
 
-    /**
-     * Metode helper untuk menganalisis skor kuesioner berdasarkan kategori.
-     * Logika kategorisasi skor untuk setiap jenis kuesioner ada di sini.
-     */
+
     private function analyzeScore($kategori, $score)
     {
         $pesan = '';
