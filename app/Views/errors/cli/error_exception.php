@@ -28,7 +28,7 @@ if (defined('SHOW_DEBUG_BACKTRACE') && SHOW_DEBUG_BACKTRACE) {
     }
 
     foreach ($backtraces as $i => $error) {
-        $padFile  = '    '; /
+        $padFile  = '    '; 
         $padClass = '       '; 
         $c        = str_pad($i + 1, 3, ' ', STR_PAD_LEFT);
 

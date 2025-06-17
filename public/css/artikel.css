@@ -46,7 +46,7 @@ body {
 }
 
 .logout {
-  background-color: red;
+  background-color: rgb(208, 4, 4);
   color: white;
   border: none;
 }
