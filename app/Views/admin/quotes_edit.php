@@ -50,9 +50,6 @@
                     <label for="quote_text">Teks Quote:</label>
                     <textarea id="quote_text" name="quote_text" rows="4" required><?= old('quote_text', $quote['quote_text']) ?></textarea>
 
-                    <label for="author">Penulis (Opsional):</label>
-                    <input type="text" id="author" name="author" value="<?= old('author', $quote['author']) ?>">
-
                     <div class="form-actions"> <a href="<?= base_url('admin/quotes') ?>" class="btn-cancel">Batal</a>
                         <button type="submit" class="btn-submit">Update Quote</button>
                     </div>

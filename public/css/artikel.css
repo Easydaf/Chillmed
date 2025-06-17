@@ -130,12 +130,11 @@ body {
 }
 
 .navbar {
-  background-color: #fff;
-  padding: 1rem 2rem;
+  background-color: #ffffff;
+  padding: 16px 32px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #ccc;
 }
 
 

@@ -13,7 +13,8 @@ class ArticleModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['title', 'image', 'content', 'author'];
+    // TAMBAH 'user_id' ke allowedFields
+    protected $allowedFields = ['user_id', 'title', 'image', 'content', 'author'];
 
     // Dates
     protected $useTimestamps = true;
@@ -23,8 +24,9 @@ class ArticleModel extends Model
 
     // Validation
     protected $validationRules = [
+        'user_id' => 'required|is_natural_no_zero', // Pastikan user_id ada dan positif
         'title'   => 'required|min_length[5]|max_length[255]',
-        'image'   => 'permit_empty|max_size[image,1024]|ext_in[image,png,jpg,jpeg,gif]', // Validasi gambar: max 1MB, format tertentu
+        'image'   => 'permit_empty|max_size[image,1024]|ext_in[image,png,jpg,jpeg,gif]',
         'content' => 'required|min_length[20]',
         'author'  => 'permit_empty|max_length[100]',
     ];

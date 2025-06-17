@@ -37,7 +37,7 @@ class AdminController extends BaseController
     }
 
     // --- Manajemen Quotes ---
-     public function quotes()
+    public function quotes()
     {
         $data = [
             'pageTitle' => 'Manajemen Quotes',
@@ -53,29 +53,33 @@ class AdminController extends BaseController
             $validation = \Config\Services::validation();
             $rules = [
                 'quote_text' => 'required|min_length[5]|max_length[500]',
-                'author'     => 'permit_empty|max_length[100]',
+                // 'author' dihapus dari validasi karena akan diisi otomatis
             ];
             $validation->setRules($rules);
 
-            if ($validation->withRequest($this->request)->run()) {
-                $data = [
-                    'quote_text' => $this->request->getPost('quote_text'),
-                    'author'     => $this->request->getPost('author'),
-                ];
-
-                if ($this->quoteModel->insert($data)) {
-                    return redirect()->to(base_url('admin/quotes'))->with('success', 'Quote berhasil ditambahkan!');
-                } else {
-                    return redirect()->back()->withInput()->with('error', 'Gagal menambahkan quote.');
-                }
-            } else {
+            if (!$validation->withRequest($this->request)->run()) {
                 return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+            }
+
+            // Ambil user ID dan nama author dari sesi
+            $loggedInUserId = session()->get('user')['id'];
+            $loggedInUserName = session()->get('user')['name'];
+
+            $data = [
+                'user_id'    => $loggedInUserId, // Simpan user_id
+                'quote_text' => $this->request->getPost('quote_text'),
+                'author'     => $loggedInUserName, // Otomatis isi dengan nama admin
+            ];
+
+            if ($this->quoteModel->insert($data)) {
+                return redirect()->to(base_url('admin/quotes'))->with('success', 'Quote berhasil ditambahkan!');
+            } else {
+                return redirect()->back()->withInput()->with('error', 'Gagal menambahkan quote.');
             }
         }
         return view('admin/quotes_add', ['pageTitle' => 'Tambah Quote Baru']);
     }
 
-    // UBAH FUNGSI editQuote (Sekarang untuk Tampilan Form & Pemrosesan POST)
     public function editQuote($id)
     {
         $quote = $this->quoteModel->find($id);
@@ -88,23 +92,28 @@ class AdminController extends BaseController
             $validation = \Config\Services::validation();
             $rules = [
                 'quote_text' => 'required|min_length[5]|max_length[500]',
-                'author'     => 'permit_empty|max_length[100]',
+                // 'author' dihapus dari validasi karena akan diisi otomatis
             ];
             $validation->setRules($rules);
 
-            if ($validation->withRequest($this->request)->run()) {
-                $data = [
-                    'quote_text' => $this->request->getPost('quote_text'),
-                    'author'     => $this->request->getPost('author'),
-                ];
-
-                if ($this->quoteModel->update($id, $data)) {
-                    return redirect()->to(base_url('admin/quotes'))->with('success', 'Quote berhasil diperbarui!');
-                } else {
-                    return redirect()->back()->withInput()->with('error', 'Gagal memperbarui quote.');
-                }
-            } else {
+            if (!$validation->withRequest($this->request)->run()) {
                 return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+            }
+            
+            // Ambil user ID dan nama author dari sesi
+            $loggedInUserId = session()->get('user')['id'];
+            $loggedInUserName = session()->get('user')['name'];
+
+            $data = [
+                'user_id'    => $loggedInUserId, // Update user_id (jika perlu diganti)
+                'quote_text' => $this->request->getPost('quote_text'),
+                'author'     => $loggedInUserName, // Otomatis isi dengan nama admin
+            ];
+
+            if ($this->quoteModel->update($id, $data)) {
+                return redirect()->to(base_url('admin/quotes'))->with('success', 'Quote berhasil diperbarui!');
+            } else {
+                return redirect()->back()->withInput()->with('error', 'Gagal memperbarui quote.');
             }
         }
         return view('admin/quotes_edit', ['pageTitle' => 'Edit Quote', 'quote' => $quote]);
@@ -136,34 +145,40 @@ class AdminController extends BaseController
 
     public function addArticle()
     {
-        if ($this->request->getMethod() === 'POST') { // PASTIKAN 'POST'
+        if ($this->request->getMethod() === 'POST') {
             $validation = \Config\Services::validation();
             $rules = [
                 'title'   => 'required|min_length[5]|max_length[255]',
                 'content' => 'required|min_length[20]',
-                'image'   => 'uploaded[image]|max_size[image,1024]|is_image[image]', // Validasi gambar
+                'image'   => 'uploaded[image]|max_size[image,1024]|is_image[image]',
+                // 'author' dihapus dari validasi karena akan diisi otomatis
             ];
             $validation->setRules($rules);
 
-            if ($validation->withRequest($this->request)->run()) {
-                $file = $this->request->getFile('image');
-                $newName = $file->getRandomName(); // Buat nama unik
-                $file->move(FCPATH . 'images', $newName); // Pindahkan ke public/images
-
-                $data = [
-                    'title'   => $this->request->getPost('title'),
-                    'content' => $this->request->getPost('content'),
-                    'author'  => $this->request->getPost('author') ?? 'ChillMed Team',
-                    'image'   => $newName, // Simpan nama file
-                ];
-
-                if ($this->articleModel->insert($data)) {
-                    return redirect()->to(base_url('admin/articles'))->with('success', 'Artikel berhasil ditambahkan!');
-                } else {
-                    return redirect()->back()->withInput()->with('error', 'Gagal menambahkan artikel.');
-                }
-            } else {
+            if (!$validation->withRequest($this->request)->run()) {
                 return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+            }
+
+            // Ambil user ID dan nama author dari sesi
+            $loggedInUserId = session()->get('user')['id'];
+            $loggedInUserName = session()->get('user')['name'];
+
+            $file = $this->request->getFile('image');
+            $newName = $file->getRandomName();
+            $file->move(FCPATH . 'images', $newName);
+
+            $data = [
+                'user_id' => $loggedInUserId, // Simpan user_id
+                'title'   => $this->request->getPost('title'),
+                'content' => $this->request->getPost('content'),
+                'author'  => $loggedInUserName, // Otomatis isi dengan nama admin
+                'image'   => $newName,
+            ];
+
+            if ($this->articleModel->insert($data)) {
+                return redirect()->to(base_url('admin/articles'))->with('success', 'Artikel berhasil ditambahkan!');
+            } else {
+                return redirect()->back()->withInput()->with('error', 'Gagal menambahkan artikel.');
             }
         }
         return view('admin/add_article_form', ['pageTitle' => 'Tambah Artikel Baru']);
@@ -177,43 +192,46 @@ class AdminController extends BaseController
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
 
-        if ($this->request->getMethod() === 'POST') { // PASTIKAN 'POST'
+        if ($this->request->getMethod() === 'POST') {
             $validation = \Config\Services::validation();
             $rules = [
                 'title'   => 'required|min_length[5]|max_length[255]',
                 'content' => 'required|min_length[20]',
             ];
-            // Hanya validasi gambar jika ada yang diupload
             if ($this->request->getFile('image')->isValid() && ! $this->request->getFile('image')->hasMoved()) {
                 $rules['image'] = 'uploaded[image]|max_size[image,1024]|is_image[image]';
             }
             $validation->setRules($rules);
 
-            if ($validation->withRequest($this->request)->run()) {
-                $data = [
-                    'title'   => $this->request->getPost('title'),
-                    'content' => $this->request->getPost('content'),
-                    'author'  => $this->request->getPost('author') ?? 'ChillMed Team',
-                ];
-
-                $file = $this->request->getFile('image');
-                if ($file->isValid() && ! $file->hasMoved()) {
-                    // Hapus gambar lama jika ada
-                    if ($article['image'] && file_exists(FCPATH . 'images/' . $article['image'])) {
-                        unlink(FCPATH . 'images/' . $article['image']);
-                    }
-                    $newName = $file->getRandomName();
-                    $file->move(FCPATH . 'images', $newName);
-                    $data['image'] = $newName; // Update nama file gambar baru
-                }
-
-                if ($this->articleModel->update($id, $data)) {
-                    return redirect()->to(base_url('admin/articles'))->with('success', 'Artikel berhasil diperbarui!');
-                } else {
-                    return redirect()->back()->withInput()->with('error', 'Gagal memperbarui artikel.');
-                }
-            } else {
+            if (!$validation->withRequest($this->request)->run()) {
                 return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+            }
+
+            // Ambil user ID dan nama author dari sesi
+            $loggedInUserId = session()->get('user')['id'];
+            $loggedInUserName = session()->get('user')['name'];
+            
+            $data = [
+                'user_id' => $loggedInUserId, // Update user_id
+                'title'   => $this->request->getPost('title'),
+                'content' => $this->request->getPost('content'),
+                'author'  => $loggedInUserName, // Otomatis isi dengan nama admin
+            ];
+
+            $file = $this->request->getFile('image');
+            if ($file->isValid() && ! $file->hasMoved()) {
+                if ($article['image'] && file_exists(FCPATH . 'images/' . $article['image'])) {
+                    unlink(FCPATH . 'images/' . $article['image']);
+                }
+                $newName = $file->getRandomName();
+                $file->move(FCPATH . 'images', $newName);
+                $data['image'] = $newName;
+            }
+
+            if ($this->articleModel->update($id, $data)) {
+                return redirect()->to(base_url('admin/articles'))->with('success', 'Artikel berhasil diperbarui!');
+            } else {
+                return redirect()->back()->withInput()->with('error', 'Gagal memperbarui artikel.');
             }
         }
         return view('admin/edit_article_form', ['pageTitle' => 'Edit Artikel', 'article' => $article]);
