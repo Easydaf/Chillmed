@@ -5,7 +5,7 @@ html {
 body {
   margin: 0;
   font-family: "Segoe UI", sans-serif;
-  background-color: #acd5cb;
+  background: linear-gradient(to bottom right, #edfffa, #acd5cb, #729990);
   color: #333;
 }
 

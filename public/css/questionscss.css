@@ -1,8 +1,14 @@
-body {
-  font-family: "Segoe UI", sans-serif;
-  background-color: #e0f5f0;
+html, body {
+  height: 100%;
   margin: 0;
   padding: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(to bottom right, #f2fbf9, #e0f5f0, #b2e5dc);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
 }
 
 header {
@@ -13,6 +19,7 @@ header {
 }
 
 main {
+  flex: 1; /* agar main mengisi sisa tinggi layar */
   text-align: center;
   padding: 2rem;
 }
