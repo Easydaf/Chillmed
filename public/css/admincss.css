@@ -1,7 +1,7 @@
 body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
-    background-color: #d2f0ec; 
+    background: linear-gradient(to bottom right, #f2fbf9, #e0f5f0, #b2e5dc); 
     display: flex; 
     min-height: 100vh;
 }
